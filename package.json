@@ -27,16 +27,16 @@
   "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
   "license": "MIT",
   "dependencies": {
-    "insite-common": "^2.2.1",
-    "insite-db": "^2.2.1",
-    "insite-users-server-ws": "^2.2.1",
-    "insite-ws": "^2.2.1",
+    "insite-common": "^2.2.2",
+    "insite-db": "^2.2.2",
+    "insite-users-server-ws": "^2.2.2",
+    "insite-ws": "^2.2.2",
     "sift": "^16.0.1"
   },
   "devDependencies": {
-    "@nesvet/conveyer": "^2.5.0",
-    "@nesvet/eslint-config": "^2.0.48",
-    "@types/node": "^22.13.10",
+    "@nesvet/conveyer": "^2.5.1",
+    "@nesvet/eslint-config": "^2.0.51",
+    "@types/node": "^22.13.14",
     "@types/ws": "^8.18.0",
     "typescript": "^5.8.2"
   }
