@@ -43,7 +43,7 @@ class NodeOutgoingTransfer<
 			},
 			
 			transformChunk(chunk) {
-				return (this.isBuffer ? chunk : Buffer.from(chunk as string, this.encoding as Exclude<typeof this.encoding, "buffer">)).toString("base64");
+				return (this.isBuffer ? chunk : Buffer.from(chunk as string, this.encoding as Exclude<typeof this.encoding, "buffer">)).toString("base64");// eslint-disable-line @typescript-eslint/no-base-to-string
 			}
 		} ],
 		
@@ -81,7 +81,7 @@ class NodeOutgoingTransfer<
 			},
 			
 			transformChunk(chunk) {
-				return chunk.toString("base64");
+				return chunk.toString("base64");// eslint-disable-line @typescript-eslint/no-base-to-string
 			}
 		} ],
 		

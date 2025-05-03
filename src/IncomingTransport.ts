@@ -33,10 +33,10 @@ export class IncomingTransport<
 			ws.on(`client-message:${headers.sent}`, (wssc: Exclude<WSORWSSC, WS>, ...args: ParametersWithoutFirst<typeof this.handleSent>) => this.handleSent(wssc, ...args));
 			ws.on(`client-message:${headers.abort}`, (wssc: Exclude<WSORWSSC, WS>, ...args: ParametersWithoutFirst<typeof this.handleAbort>) => this.handleAbort(wssc, ...args));
 		} else {
-			ws.on(`message:${headers.request}`, (...args: ParametersWithoutFirst<typeof this.handleRequest>) => this.handleRequest(ws, ...args));
-			ws.on(`message:${headers.chunk}`, (...args: ParametersWithoutFirst<typeof this.handleChunk>) => this.handleChunk(ws, ...args));
-			ws.on(`message:${headers.sent}`, (...args: ParametersWithoutFirst<typeof this.handleSent>) => this.handleSent(ws, ...args));
-			ws.on(`message:${headers.abort}`, (...args: ParametersWithoutFirst<typeof this.handleAbort>) => this.handleAbort(ws, ...args));
+			ws.on(`message:${headers.request}`, (...args: ParametersWithoutFirst<typeof this.handleRequest>) => this.handleRequest(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.chunk}`, (...args: ParametersWithoutFirst<typeof this.handleChunk>) => this.handleChunk(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.sent}`, (...args: ParametersWithoutFirst<typeof this.handleSent>) => this.handleSent(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.abort}`, (...args: ParametersWithoutFirst<typeof this.handleAbort>) => this.handleAbort(ws as WSORWSSC, ...args));
 		}
 		
 		Object.assign(ws, {
@@ -95,13 +95,13 @@ export class IncomingTransport<
 	};
 	
 	private handleRequest(
-		ws: Exclude<WSORWSSC, WS> | WS,
+		ws: WSORWSSC,
 		kind: string,
 		id: string,
 		{ type, size, metadata, ...restProps }: IncomingTransferProps<Types>
 	) {
 		
-		const { Transfer } = this.constructor as typeof IncomingTransport;
+		const { Transfer } = this.constructor as typeof IncomingTransport;// eslint-disable-line @typescript-eslint/naming-convention
 		
 		if (!this.#listeners.has(kind))
 			ws.sendMessage(headers.error, id, `Unknown kind of file "${kind}"`);
@@ -128,17 +128,17 @@ export class IncomingTransport<
 		
 	}
 	
-	private handleChunk(ws: Exclude<WSORWSSC, WS> | WS, id: string, chunk: IncomingChunk, length = chunk.length) {
-		this.#transfers.get(id)?.handleChunk(chunk, length);
+	private async handleChunk(ws: WSORWSSC, id: string, chunk: IncomingChunk, length = chunk.length) {
+		await this.#transfers.get(id)?.handleChunk(chunk, length);
 		
 	}
 	
-	private handleSent(ws: Exclude<WSORWSSC, WS> | WS, id: string) {
-		this.#transfers.get(id)?.handleSent();
+	private async handleSent(ws: WSORWSSC, id: string) {
+		await this.#transfers.get(id)?.handleSent();
 		
 	}
 	
-	private handleAbort(ws: Exclude<WSORWSSC, WS> | WS, id: string) {
+	private handleAbort(ws: WSORWSSC, id: string) {
 		this.#transfers.get(id)?.abort(true);
 		
 	}

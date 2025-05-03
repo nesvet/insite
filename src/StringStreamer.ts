@@ -32,7 +32,7 @@ export class StringStreamer {
 	start(listener: Listener) {
 		this.listener = listener;
 		
-		this.#next();
+		void this.#next();
 		
 	}
 	
@@ -49,7 +49,7 @@ export class StringStreamer {
 				if (this.#end < this.size) {
 					this.#start = this.#end;
 					
-					this.#next();
+					void this.#next();
 				}
 			}
 		}

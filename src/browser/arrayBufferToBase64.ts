@@ -5,7 +5,7 @@ export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): Promise<string> {
 		
 		// eslint-disable-next-line unicorn/prefer-add-event-listener
 		fileReader.onload = () =>
-			resolve(typeof fileReader?.result == "string" ? fileReader.result.slice(Math.max(0, (fileReader.result as string).indexOf(",") + 1)) : "");
+			resolve(typeof fileReader?.result == "string" ? fileReader.result.slice(Math.max(0, fileReader.result.indexOf(",") + 1)) : "");
 		
 		fileReader.readAsDataURL(new Blob([ arrayBuffer ]));
 		

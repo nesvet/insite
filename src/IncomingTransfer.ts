@@ -18,7 +18,7 @@ import type {
 
 export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 	constructor(
-		ws: Exclude<WSORWSSC, WS> | WS,
+		ws: WSORWSSC,
 		kind: string,
 		id: string,
 		{
@@ -85,7 +85,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 	
 	[key: number | string | symbol]: unknown;
 	
-	#progressInterval?: NodeJS.Timeout;
+	#progressInterval?: ReturnType<typeof setTimeout>;
 	#lastProgress = 0;
 	
 	async #setup() {
@@ -97,7 +97,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 		else
 			throw new Error(`Unknown type of transfer "${String(this.type)}"`);
 		
-		this.confirm();
+		await this.confirm();
 		
 	}
 	
@@ -128,7 +128,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 		
 	}
 	
-	handleChunk(chunk: IncomingChunk, length = chunk.length) {
+	async handleChunk(chunk: IncomingChunk, length = chunk.length) {
 		
 		const ts = Date.now();
 		this.bytesPerMs = length / (ts - this.#prevChunkAt!);
@@ -139,7 +139,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 		
 		if (!this.#isProcessing) {
 			this.#isProcessing = true;
-			this.#process();
+			await this.#process();
 		}
 		
 	}
@@ -162,17 +162,17 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 			this.progress = this.processedSize / this.size;
 		
 		if (this.#chunksQueue.length)
-			this.#process();
+			void this.#process();
 		else {
 			this.#isProcessing = false;
 			
 			if (this.isTransfered)
-				this.#complete();
+				void this.#complete();
 		}
 		
 	}
 	
-	handleSent() {
+	async handleSent() {
 		
 		this.isTransfered = true;
 		
@@ -184,7 +184,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 		this.bytesPerMs = this.size / this.duration;
 		
 		if (!this.#isProcessing)
-			this.#complete();
+			await this.#complete();
 		
 	}
 	
@@ -274,7 +274,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 			},
 			
 			collect(chunk) {
-				this.data += chunk as string;
+				this.data += chunk as string;// eslint-disable-line @typescript-eslint/restrict-plus-operands
 				
 			},
 			
@@ -293,14 +293,14 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 			},
 			
 			collect(chunk) {
-				this.data += chunk as string;
+				this.data += chunk as string;// eslint-disable-line @typescript-eslint/restrict-plus-operands
 				
 			},
 			
 			done() {
 				
 				if (this.collect)
-					this.data = `data:${this.metadata.type};base64,${this.data}`;
+					this.data = `data:${this.metadata.type as string};base64,${this.data as string}`;
 				
 			}
 		},
@@ -314,7 +314,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 			},
 			
 			collect(chunk) {
-				this.data += chunk as string;
+				this.data += chunk as string;// eslint-disable-line @typescript-eslint/restrict-plus-operands
 				
 			}
 		}

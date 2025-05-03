@@ -22,7 +22,7 @@ import type {
 
 export class OutgoingTransfer<WSORWSSC extends WS | WSServerClient> {
 	constructor(
-		ws: Exclude<WSORWSSC, WS> | WS,
+		ws: WSORWSSC,
 		kind: string,
 		{
 			data,
@@ -151,7 +151,7 @@ export class OutgoingTransfer<WSORWSSC extends WS | WSServerClient> {
 		
 		await (this.#onBegin as any)?.call(...this.#callArgs, this);
 		
-		this.#methods!.confirm.call(this);
+		await this.#methods!.confirm.call(this);
 		
 	}
 	
@@ -160,7 +160,7 @@ export class OutgoingTransfer<WSORWSSC extends WS | WSServerClient> {
 		
 		if (!this.#isProcessing) {
 			this.#isProcessing = true;
-			this.#process();
+			void this.#process();
 		}
 		
 	};
@@ -187,7 +187,7 @@ export class OutgoingTransfer<WSORWSSC extends WS | WSServerClient> {
 		await (this.#onSenderProgress as any)?.call(...this.#callArgs, this);
 		
 		if (this.#chunksQueue.length)
-			this.#process();
+			void this.#process();
 		else {
 			this.#isProcessing = false;
 			

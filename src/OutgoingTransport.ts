@@ -28,14 +28,14 @@ export class OutgoingTransport<
 					this.transfer(wssc, kind, props)
 			});
 		} else {
-			ws.on(`message:${headers.confirm}`, (...args: ParametersWithoutFirst<typeof this.handleConfirm>) => this.handleConfirm(ws, ...args));
-			ws.on(`message:${headers.progress}`, (...args: ParametersWithoutFirst<typeof this.handleProgress>) => this.handleProgress(ws, ...args));
-			ws.on(`message:${headers.completed}`, (...args: ParametersWithoutFirst<typeof this.handleCompleted>) => this.handleCompleted(ws, ...args));
-			ws.on(`message:${headers.error}`, (...args: ParametersWithoutFirst<typeof this.handleError>) => this.handleError(ws, ...args));
+			ws.on(`message:${headers.confirm}`, (...args: ParametersWithoutFirst<typeof this.handleConfirm>) => this.handleConfirm(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.progress}`, (...args: ParametersWithoutFirst<typeof this.handleProgress>) => this.handleProgress(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.completed}`, (...args: ParametersWithoutFirst<typeof this.handleCompleted>) => this.handleCompleted(ws as WSORWSSC, ...args));
+			ws.on(`message:${headers.error}`, (...args: ParametersWithoutFirst<typeof this.handleError>) => this.handleError(ws as WSORWSSC, ...args));
 			
 			Object.assign(ws, {
 				transfer: (kind: string, props: OutgoingTransferProps<WSORWSSC, T, Types>) =>
-					this.transfer(ws, kind, props)
+					this.transfer(ws as WSORWSSC, kind, props)
 			});
 		}
 		
@@ -47,9 +47,9 @@ export class OutgoingTransport<
 		delete: (id: string) => this.#transfers.delete(id)
 	};
 	
-	transfer(ws: Exclude<WSORWSSC, WS> | WS, kind: string, props: OutgoingTransferProps<WSORWSSC, T, Types>) {
+	transfer(ws: WSORWSSC, kind: string, props: OutgoingTransferProps<WSORWSSC, T, Types>) {
 		
-		const { Transfer } = this.constructor as typeof OutgoingTransport;
+		const { Transfer } = this.constructor as typeof OutgoingTransport;// eslint-disable-line @typescript-eslint/naming-convention
 		
 		const transfer = new Transfer(ws, kind, props, this.#transferHandles);
 		
@@ -58,22 +58,22 @@ export class OutgoingTransport<
 		return transfer;
 	}
 	
-	private handleConfirm(ws: Exclude<WSORWSSC, WS> | WS, id: string, confirmResponse: string) {
-		this.#transfers.get(id)?.handleConfirm(confirmResponse);
+	private async handleConfirm(ws: WSORWSSC, id: string, confirmResponse: string) {
+		await this.#transfers.get(id)?.handleConfirm(confirmResponse);
 		
 	}
 	
-	private handleProgress(ws: Exclude<WSORWSSC, WS> | WS, id: string, progress: number) {
+	private handleProgress(ws: WSORWSSC, id: string, progress: number) {
 		this.#transfers.get(id)?.handleProgress(progress);
 		
 	}
 	
-	private handleCompleted(ws: Exclude<WSORWSSC, WS> | WS, id: string) {
-		this.#transfers.get(id)?.handleCompleted();
+	private async handleCompleted(ws: WSORWSSC, id: string) {
+		await this.#transfers.get(id)?.handleCompleted();
 		
 	}
 	
-	private handleError(ws: Exclude<WSORWSSC, WS> | WS, id: string, errorMessage: string) {
+	private handleError(ws: WSORWSSC, id: string, errorMessage: string) {
 		this.#transfers.get(id)?.throw(errorMessage);
 		
 	}

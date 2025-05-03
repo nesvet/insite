@@ -41,24 +41,24 @@ export type OutgoingTransferProps<
 	incomingEncoding?: "base64" | "buffer" | "utf8";
 	
 	onBegin?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	onSenderProgress?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	onProgress?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	onEnd?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	onError?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T, error: Error): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, error: Error): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T, error: Error): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, error: Error): unknown };
 };
 
 export type OutgoingTransferHandles = {
@@ -70,8 +70,8 @@ export type OutgoingTransferHandles = {
 export type OutgoingTransferMethods<
 	T extends OutgoingTransfer<WS | WSServerClient>
 > = {
-	setup(this: T): void;
-	confirm(this: T): void;
+	setup(this: T): Promise<void> | void;
+	confirm(this: T): Promise<void> | void;
 	transformChunk?(this: T, chunk: OutgoingChunk): OutgoingChunk | Promise<OutgoingChunk>;
 };
 
@@ -108,10 +108,10 @@ export type IncomingTransferProps<Types extends TransferTypes> = {
 export type IncomingTransferMethods<
 	T extends IncomingTransfer<WS | WSServerClient>
 > = {
-	setup(this: T): void;
-	collect(this: T, chunk: IncomingChunk): void;
-	transformChunk?(this: T, chunk: IncomingChunk): IncomingChunk;
-	done?(this: T): void;
+	setup(this: T): Promise<void> | void;
+	collect(this: T, chunk: IncomingChunk): Promise<void> | void;
+	transformChunk?(this: T, chunk: IncomingChunk): IncomingChunk | Promise<IncomingChunk>;
+	done?(this: T): Promise<void> | void;
 };
 
 export type IncomingTransferTypes<
@@ -125,24 +125,24 @@ export type IncomingTransferListener<
 > = {
 	
 	begin?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	chunk?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T, chunk: IncomingChunk): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, chunk: IncomingChunk): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T, chunk: IncomingChunk): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, chunk: IncomingChunk): unknown };
 	
 	progress?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T, chunk: IncomingChunk): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, chunk: IncomingChunk): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T, chunk: IncomingChunk): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, chunk: IncomingChunk): unknown };
 	
 	end?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T): unknown };
 	
 	error?: WSORWSSC extends WS ?
-		{ (this: WS, transfer: T, error: Error): Promise<unknown> | unknown } :
-		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, error: Error): Promise<unknown> | unknown };
+		{ (this: WS, transfer: T, error: Error): unknown } :
+		{ (this: WSServer<Exclude<WSORWSSC, WS>>, wssc: Exclude<WSORWSSC, WS>, transfer: T, error: Error): unknown };
 	
 	once?: boolean;
 	

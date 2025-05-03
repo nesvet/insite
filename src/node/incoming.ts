@@ -76,7 +76,7 @@ const streamMethod: IncomingTransferMethods<NodeIncomingTransfer<WS | WSServerCl
 		if (this.isBuffer)
 			this.data = Buffer.concat([ this.data as Buffer, chunk as Buffer ]);
 		else
-			this.data += chunk as string;
+			this.data += chunk as string;// eslint-disable-line @typescript-eslint/restrict-plus-operands
 		
 	},
 	

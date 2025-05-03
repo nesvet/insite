@@ -24,7 +24,7 @@ class BrowserIncomingTransfer<
 			},
 			
 			collect(chunk) {
-				this.data += chunk as string;
+				this.data += chunk as string;// eslint-disable-line @typescript-eslint/restrict-plus-operands
 				
 			},
 			
