@@ -9,9 +9,9 @@ import { Publication } from "./Publication";
 import { SubscriptionHandle } from "./SubscriptionHandle";
 import { Subscriptions } from "./Subscriptions";
 import {
-	type CollectionMapPublicationArgs,
 	isCollectionMapPublicationArgs,
 	isPublicationCollectionMap,
+	type CollectionMapPublicationArgs,
 	type PublicationArgs,
 	type WSSubscriptionArgs
 } from "./types";
@@ -52,7 +52,7 @@ export class SubscriptionHandler<AS extends AbilitiesSchema> {
 	
 	renewSubscriptionsFor = (webSockets: WSSCWithUser<AS>[]) => {
 		for (const wssc of webSockets)
-			this.#wsSubscriptionMap.get(wssc)?.renew();
+			void this.#wsSubscriptionMap.get(wssc)?.renew();
 		
 	};
 	

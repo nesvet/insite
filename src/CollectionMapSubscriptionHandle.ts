@@ -25,7 +25,7 @@ export class CollectionMapSubscriptionHandle<
 			this.publication.subscribe(this);
 			
 			if (immediately)
-				this.changed(null);
+				void this.changed(null);
 		}
 		
 	}
@@ -33,10 +33,10 @@ export class CollectionMapSubscriptionHandle<
 	ids = new Set<string>();
 	
 	query: Filter<D> | null = null;
-	projection: null | Projection = null;
+	projection: Projection | null = null;
 	isProjectionInclusive = false;
-	fields: null | Set<string> = null;
-	sort: null | Sort = null;
+	fields: Set<string> | null = null;
+	sort: Sort | null = null;
 	
 	match?: (doc: D) => boolean;
 	
@@ -46,7 +46,7 @@ export class CollectionMapSubscriptionHandle<
 	}
 	
 	updates: unknown[] = [];
-	#flushTimeout?: NodeJS.Timeout;
+	#flushTimeout?: ReturnType<typeof setTimeout>;
 	
 	flushUpdates = () => {
 		

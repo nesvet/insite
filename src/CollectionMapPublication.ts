@@ -170,7 +170,6 @@ export class CollectionMapPublication<
 					this.transform(item, subscription.args);
 			
 			return [ "i"/* initial */, array, subscription.sort ];
-			
 		}
 		
 		return null;
@@ -195,7 +194,7 @@ export class CollectionMapPublication<
 	flushInitial() {
 		return Promise.all([ ...this.subscriptions ].map(async subscription => {
 			const fetched = await this.fetchSubscription(subscription, null);
-			subscription.handler!([ fetched ]);
+			subscription.handler([ fetched ]);
 			subscription.updates = [];
 			
 		}));
