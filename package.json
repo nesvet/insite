@@ -1,34 +1,34 @@
 {
-  "name": "insite-subscriptions-react",
+	"name": "insite-subscriptions-react",
   "version": "2.2.3",
-  "description": "inSite subscriptions React components",
-  "type": "module",
-  "main": "./src/index.js",
-  "module": "./src/index.js",
-  "packageManager": "bun@1.2.9",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nesvet/insite-subscriptions-react.git"
-  },
-  "keywords": [
-    "insite",
-    "subscriptions",
-    "react"
-  ],
-  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
-  "license": "MIT",
-  "dependencies": {
-    "@nesvet/n": "^1.1.29",
-    "insite-subscriptions-client": "^2.2.3",
-    "react": "~18.2.0"
-  },
-  "devDependencies": {
-    "@nesvet/eslint-config": "^2.0.52",
-    "@types/react": "^18.3.20",
-    "typescript": "^5.8.3"
-  }
+	"description": "inSite subscriptions React components",
+	"type": "module",
+	"main": "./src/index.js",
+	"module": "./src/index.js",
+	"packageManager": "bun@1.2.11",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc -p ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nesvet/insite-subscriptions-react.git"
+	},
+	"keywords": [
+		"insite",
+		"subscriptions",
+		"react"
+	],
+	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+	"license": "MIT",
+	"dependencies": {
+		"@nesvet/n": "^1.2.0",
+		"insite-subscriptions-client": "^2.3.0",
+		"react": "~18.2.0"
+	},
+	"devDependencies": {
+		"@nesvet/eslint-config": "^2.1.1",
+		"@types/react": "^18.3.20",
+		"typescript": "^5.8.3"
+	}
 }
