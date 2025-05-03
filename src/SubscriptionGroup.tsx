@@ -63,44 +63,31 @@ export class SubscriptionGroupComponent extends Component<Props, State> {
 	
 	unsubscribe = () => this.group.unsubscribe();
 	
-	shouldComponentUpdate = this.props.consistent ? undefined : (nextProps: Props) => {
-		if (this.props.target !== nextProps.target || this.props.debounce !== nextProps.debounce)
-			this.group.applyOptions({ target: nextProps.target, debounceLimit: nextProps.debounce });
-		
-		const definitionsSnapshot = JSON.stringify(nextProps.definitions);
-		
-		if (this.definitionsSnapshot === definitionsSnapshot)
-			return true;
-		
-		this.definitionsSnapshot = definitionsSnapshot;
-		this.redefine(nextProps.definitions);
-		
-		return false;
-		
-	};
+	
+	shouldComponentUpdate =
+		this.props.consistent ?
+			undefined :
+			SubscriptionGroupComponent.inconsistentShouldComponentUpdate;
 	
 	render() {
 		return this.props.children?.(this.group.isLoaded, this.group.values) || null;
 	}
 	
 	
-	handleUpdate = () => this.props.onUpdate?.(this.group);
+	handleUpdate() {
+		
+		this.props.onUpdate?.(this.group);
+		
+	}
 	
 	componentDidMount() {
 		
 		this.subscribe();
 		
-		this.handleUpdate = this.props.consistent ? () => {
-			
-			this.props.onUpdate?.(this.group);
-			this.forceUpdate();
-			
-		} : () => {
-			
-			this.props.onUpdate?.(this.group);
-			this.setState({});
-			
-		};
+		this.handleUpdate =
+			this.props.consistent ?
+				SubscriptionGroupComponent.consistentHandleUpdate :
+				SubscriptionGroupComponent.inconsistentHandleUpdate;
 		
 	}
 	
@@ -112,6 +99,35 @@ export class SubscriptionGroupComponent extends Component<Props, State> {
 		
 	}
 	
+	
+	static inconsistentShouldComponentUpdate(this: SubscriptionGroupComponent, nextProps: Props) {
+		if (this.props.target !== nextProps.target || this.props.debounce !== nextProps.debounce)
+			this.group.applyOptions({ target: nextProps.target, debounceLimit: nextProps.debounce });
+		
+		const definitionsSnapshot = JSON.stringify(nextProps.definitions);
+		
+		if (this.definitionsSnapshot === definitionsSnapshot)
+			return true;
+		
+		this.definitionsSnapshot = definitionsSnapshot;
+		void this.redefine(nextProps.definitions);
+		
+		return false;
+	}
+	
+	static consistentHandleUpdate(this: SubscriptionGroupComponent) {
+		
+		this.props.onUpdate?.(this.group);
+		this.forceUpdate();
+		
+	}
+	
+	static inconsistentHandleUpdate(this: SubscriptionGroupComponent) {
+		
+		this.props.onUpdate?.(this.group);
+		this.setState({});
+		
+	}
 	
 	static bindTo = Subscription.bindTo;
 	

@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import { noop } from "@nesvet/n";
 import {
 	getSubscriptionSymbol,
 	renewSymbol,
@@ -84,7 +85,43 @@ export class SubscriptionComponent extends Component<Props, State> {
 	}
 	
 	
-	shouldComponentUpdate = this.props.consistent ? undefined : (nextProps: Props) => {
+	shouldComponentUpdate =
+		this.props.consistent ?
+			undefined :
+			SubscriptionComponent.inconsistentShouldComponentUpdate;
+	
+	render() {
+		return this.props.children?.(this.isActive, this.value) || null;
+	}
+	
+	
+	handleUpdate() {
+		
+		this.props.onUpdate?.(this.value);
+		
+	}
+	
+	componentDidMount() {
+		
+		this.subscribe();
+		
+		this.handleUpdate =
+			this.props.consistent ?
+				SubscriptionComponent.consistentHandleUpdate :
+				SubscriptionComponent.inconsistentHandleUpdate;
+		
+	}
+	
+	componentWillUnmount() {
+		
+		this.handleUpdate = noop;
+		
+		this.unsubscribe();
+		
+	}
+	
+	
+	static inconsistentShouldComponentUpdate(this: SubscriptionComponent, nextProps: Props) {
 		const publicationSnapshot = JSON.stringify(nextProps.params) + nextProps.publication;
 		
 		if (this.publicationSnapshot === publicationSnapshot)
@@ -94,40 +131,21 @@ export class SubscriptionComponent extends Component<Props, State> {
 		this.renew(nextProps.publication, nextProps.params);
 		
 		return false;
-		
-	};
-	
-	render() {
-		return this.props.children?.(this.isActive, this.value) || null;
 	}
 	
-	
-	handleUpdate = () => this.props.onUpdate?.(this.value);
-	
-	componentDidMount() {
+	static consistentHandleUpdate(this: SubscriptionComponent) {
 		
-		this.subscribe();
-		
-		this.handleUpdate = this.props.consistent ? () => {
-			
-			this.props.onUpdate?.(this.value);
-			this.forceUpdate();
-			
-		} : () => {
-			
-			this.props.onUpdate?.(this.value);
-			this.setState({});
-			
-		};
+		this.props.onUpdate?.(this.value);
+		this.forceUpdate();
 		
 	}
 	
-	componentWillUnmount() {
+	static inconsistentHandleUpdate(this: SubscriptionComponent) {
 		
-		this.unsubscribe();
+		this.props.onUpdate?.(this.value);
+		this.setState({});
 		
 	}
-	
 	
 	static defaultProps = {
 		params: []
