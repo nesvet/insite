@@ -1,44 +1,44 @@
 {
-  "name": "insite-ws-transfers",
+	"name": "insite-ws-transfers",
   "version": "2.2.3",
-  "description": "inSite file transfers over WebSockets",
-  "type": "module",
-  "main": "./dist/node/index.js",
-  "module": "./dist/node/index.js",
-  "exports": {
-    ".": "./dist/node/index.js",
-    "./node": "./dist/node/index.js",
-    "./browser": "./dist/browser/index.js"
-  },
-  "packageManager": "bun@1.2.9",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "bun .conveyer.js",
-    "postbuild": "tsc -p ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nesvet/insite-ws-transfers.git"
-  },
-  "keywords": [
-    "insite",
-    "ws",
-    "websockets",
-    "files",
-    "transfers"
-  ],
-  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
-  "license": "MIT",
-  "dependencies": {
-    "@nesvet/n": "^1.1.29",
-    "insite-ws": "^2.2.3",
-    "mime": "^4.0.7"
-  },
-  "devDependencies": {
-    "@nesvet/conveyer": "^2.5.1",
-    "@nesvet/eslint-config": "^2.0.52",
-    "@types/node": "^22.14.1",
-    "@types/ws": "^8.18.1",
-    "typescript": "^5.8.3"
-  }
+	"description": "inSite file transfers over WebSockets",
+	"type": "module",
+	"main": "./dist/node/index.js",
+	"module": "./dist/node/index.js",
+	"exports": {
+		".": "./dist/node/index.js",
+		"./node": "./dist/node/index.js",
+		"./browser": "./dist/browser/index.js"
+	},
+	"packageManager": "bun@1.2.11",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "bun .conveyer.js",
+		"postbuild": "tsc -p ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nesvet/insite-ws-transfers.git"
+	},
+	"keywords": [
+		"insite",
+		"ws",
+		"websockets",
+		"files",
+		"transfers"
+	],
+	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+	"license": "MIT",
+	"dependencies": {
+		"@nesvet/n": "^1.2.0",
+		"insite-ws": "^2.3.0",
+		"mime": "^4.0.7"
+	},
+	"devDependencies": {
+		"@nesvet/conveyer": "^2.5.2",
+		"@nesvet/eslint-config": "^2.1.1",
+		"@types/node": "^22.15.3",
+		"@types/ws": "^8.18.1",
+		"typescript": "^5.8.3"
+	}
 }
