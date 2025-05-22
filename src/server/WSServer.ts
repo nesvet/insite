@@ -67,6 +67,7 @@ export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebS
 	on(event: "client-connect", listener: (this: this, wscc: WSSC, request: http.IncomingMessage) => void): this;
 	on(event: "client-error", listener: (this: this, wscc: WSSC, error: Error | undefined) => void): this;
 	on(event: `client-${string}`, listener: (this: this, wscc: WSSC, ...args: any[]) => void): this;
+	on(event: "client-close", listener: (this: this, wscc: WSSC) => void): this;
 	
 	on(event: string | symbol, listener: (this: this, ...args: any[]) => void): this;
 	on(event: string | symbol, listener: (this: this, ...args: any[]) => void): this {
