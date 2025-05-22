@@ -273,7 +273,6 @@ export class WSServerClient extends WebSocket {
 		clearInterval(this[heartbeatIntervalSymbol]);
 		
 		this.wss.emit("client-close", this);
-		this.wss.emit("client-closed", this);
 		
 	}
 	
