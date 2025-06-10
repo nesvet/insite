@@ -48,7 +48,7 @@ class NodeOutgoingTransfer<
 			}
 		} ],
 		
-		[ "file", data => typeof data == "string" && /^(\/|(\/[^/]+)+)$/.test(data), {
+		[ "file", data => typeof data == "string" && existsSync(data), {
 			
 			async setup() {
 				
