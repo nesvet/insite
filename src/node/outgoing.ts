@@ -1,5 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
+import { createReadStream, existsSync } from "node:fs";
+import { stat } from "node:fs/promises";
+import { basename, extname } from "node:path";
 import { Readable } from "node:stream";
 import mime from "mime";
 import type { WS } from "insite-ws/client";
@@ -52,17 +53,17 @@ class NodeOutgoingTransfer<
 			async setup() {
 				
 				const fileName = this.data as string;
-				const name = path.basename(fileName);
-				const { size, mtimeMs: modifiedAt } = await fs.promises.stat(fileName);
+				const name = basename(fileName);
+				const { size, mtimeMs: modifiedAt } = await stat(fileName);
 				
 				const metadata = {
 					name,
-					type: mime.getType(path.extname(name).slice(1)),
+					type: mime.getType(extname(name).slice(1)),
 					size,
 					modifiedAt
 				};
 				
-				this.stream = fs.createReadStream(fileName);
+				this.stream = createReadStream(fileName);
 				
 				this.size = size;
 				this.encoding = "buffer";
