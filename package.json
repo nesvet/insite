@@ -32,7 +32,7 @@
 		"ws": "^8.18.3"
 	},
 	"devDependencies": {
-		"@nesvet/conveyer": "^2.6.0",
+		"@nesvet/conveyer": "^2.6.1",
 		"@nesvet/eslint-config": "^2.1.2",
 		"@types/node": "^24.0.13",
 		"@types/ws": "^8.18.1",
