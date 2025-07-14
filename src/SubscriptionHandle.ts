@@ -22,7 +22,7 @@ export class SubscriptionHandle<SA extends SubscriptionArgs> {
 				this.publication.subscribe(this);
 				
 				if (immediately)
-					this.changed(null);
+					void this.changed(null);
 			}
 			
 		} else if (process.env.NODE_ENV === "development")

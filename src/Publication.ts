@@ -3,7 +3,7 @@ import type { PublicationProps, SubscriptionArgs } from "./types";
 
 
 declare global {
-	var __insite_publications: Map<string, Publication>;// eslint-disable-line no-var
+	var __insite_publications: Map<string, Publication>;// eslint-disable-line no-var, @typescript-eslint/naming-convention
 }
 
 export const publications =
@@ -43,7 +43,7 @@ export class Publication<SA extends SubscriptionArgs = SubscriptionArgs> {
 	
 	changed(reason?: unknown) {
 		for (const subscription of this.subscriptions)
-			subscription.changed(reason);
+			void subscription.changed(reason);
 		
 	}
 	

@@ -5,9 +5,9 @@ import type { SubscriptionHandle } from "./SubscriptionHandle";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
-export type PartialWithId<D extends Document> = { _id: string } & Partial<D>;
+export type PartialWithId<D extends Document> = Partial<D> & { _id: string };
 
-export type TransformableDoc<D extends Document> = { [key: string]: any } & PartialWithId<D>;
+export type TransformableDoc<D extends Document> = PartialWithId<D> & { [key: string]: any };
 
 export type PublicationProps<SA extends SubscriptionArgs> = {
 	type?: "object";
@@ -22,5 +22,5 @@ export type SubscriptionArgs = unknown[];
 export type SubscriptionHandler = (fetched: unknown, reason?: unknown) => void;
 
 export type Projection = {
-	[key: string]: boolean | number | Projection;
+	[key: string]: Projection | boolean | number;
 };
