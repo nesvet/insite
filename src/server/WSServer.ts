@@ -18,6 +18,8 @@ import type { Options, RequestListener } from "./types";
 export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebSocketServer<typeof WSServerClient> {
 	constructor(options: Options<WSSC>) {
 		const {
+			icon = "🔌",
+			name = "WS",
 			ssl: _,
 			port,
 			server = createServer(WSServer.makeProps(options)),
@@ -30,6 +32,9 @@ export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebS
 			...wssOptions,
 			server
 		});
+		
+		this.icon = icon;
+		this.name = name;
 		
 		this.server = server;
 		
@@ -78,8 +83,8 @@ export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebS
 	readonly isWebSocketServerClient = false;
 	readonly isWebSocket = false;
 	
-	icon = "🔌";
-	name = "WS";
+	icon;
+	name;
 	get protocol() {
 		return `ws${this.isS ? "s" : ""}`;
 	}

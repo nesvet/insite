@@ -6,6 +6,19 @@ import type { WSServerClient } from "./WSServerClient";
 
 
 export type Options<WSSC extends WSServerClient> = Omit<ServerOptions<typeof WSServerClient>, "port"> & {
+	
+	/**
+	 * Icon for console logs
+	 * @default "🔌"
+	 */
+	icon?: string;
+	
+	/**
+	 * Name
+	 * @default "WS"
+	 */
+	name?: string;
+	
 	ssl?: {
 		cert: Buffer | string;
 		key: Buffer | string;
