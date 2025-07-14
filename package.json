@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "./src/index.js",
 	"module": "./src/index.js",
-	"packageManager": "bun@1.2.11",
+	"packageManager": "bun@1.2.18",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "tsc -p ."
@@ -22,13 +22,13 @@
 	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
 	"license": "MIT",
 	"dependencies": {
-		"@nesvet/n": "^1.2.0",
-		"insite-subscriptions-client": "^2.3.0",
+		"@nesvet/n": "^1.2.1",
+		"insite-subscriptions-client": "^2.3.3",
 		"react": "~18.2.0"
 	},
 	"devDependencies": {
-		"@nesvet/eslint-config": "^2.1.1",
-		"@types/react": "^18.3.20",
+		"@nesvet/eslint-config": "^2.1.2",
+		"@types/react": "^18.3.23",
 		"typescript": "^5.8.3"
 	}
 }
