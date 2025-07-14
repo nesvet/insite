@@ -31,7 +31,7 @@ export class Publication<SA extends SubscriptionArgs = SubscriptionArgs> {
 	
 	fetch?(...args: SA): unknown;
 	
-	fetchSubscription(subscription: SubscriptionHandle<SA>, ..._: unknown[]) { // eslint-disable-line @typescript-eslint/no-unused-vars
+	fetchSubscription(subscription: SubscriptionHandle<SA>, _reason?: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
 		return this.fetch?.(...subscription.args);
 	}
 	
