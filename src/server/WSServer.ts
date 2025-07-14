@@ -7,6 +7,7 @@ import {
 	resolveSSL,
 	showServerListeningMessage
 } from "insite-common/backend";
+import { CODES } from "../common";
 import { isQuietSymbol, requestListenersSymbol } from "./symbols";
 import { WSServerClient } from "./WSServerClient";
 import type { Options, RequestListener } from "./types";
@@ -152,5 +153,7 @@ export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebS
 			...resolveSSL(ssl)
 		};
 	}
+	
+	static CLOSE_CODES = CODES;
 	
 }

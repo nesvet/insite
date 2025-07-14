@@ -2,6 +2,7 @@ import { ClientRequest, IncomingMessage } from "node:http";
 import { RawData, WebSocket } from "ws";
 import { handleMongoError } from "@nesvet/n";
 import {
+	CODES,
 	HEARTBEAT_GAP,
 	HEARTBEAT_INTERVAL,
 	REQUEST_COUNTER_LIMIT,
@@ -275,5 +276,7 @@ export class WSServerClient extends WebSocket {
 		this.wss.emit("client-close", this);
 		
 	}
+	
+	static CLOSE_CODES = CODES;
 	
 }
