@@ -1,6 +1,6 @@
 {
 	"name": "insite-subscriptions-react",
-	"version": "2.3.0",
+	"version": "2.3.3",
 	"description": "inSite subscriptions React components",
 	"type": "module",
 	"main": "./src/index.js",
