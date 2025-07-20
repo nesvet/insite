@@ -1,4 +1,4 @@
-# inSite file transfers over WebSockets
+# inSite transfers over WebSockets
 
 ## Installation
 
