@@ -171,7 +171,7 @@ export class SubscriptionGroupItem<T extends SubscriptionType = SubscriptionType
 						if (debouncedUpdated)
 							Object.assign(debouncedUpdated, updated);
 						else
-							debouncedUpdated = { ...updated };// eslint-disable-line @typescript-eslint/no-misused-spread
+							debouncedUpdated = { ...updated };
 					else
 						debouncedUpdated = updated;
 				
