@@ -1,5 +1,5 @@
 import path from "node:path";
-import { Conveyer, ESBuild } from "@nesvet/conveyer";
+import { Conveyer, ESBuild } from "cnvr";
 
 
 const distDir = "dist";
