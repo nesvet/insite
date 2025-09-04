@@ -68,7 +68,8 @@ export class CollectionMapSubscriptionHandle<
 				(
 					next.updateDescription.updatedFields &&
 					Object.keys(next.updateDescription.updatedFields).some(field => this.fields!.has(field))
-				)
+				) ||
+				next.updateDescription.removedFields?.some(field => this.fields!.has(field))
 			) : (
 				"fullDocument" in next &&
 				this.match!(next.fullDocument!)

@@ -137,8 +137,14 @@ export class CollectionMapPublication<
 				if (next.operationType === "insert" || (next.operationType !== "delete" && subscription.match!(next.fullDocument!))) {
 					const doc = projectDocument(next.fullDocument!, subscription.projection, subscription.isProjectionInclusive);
 					this.transform?.(doc as TransformableDoc<D>, subscription.args);
-					if (subscription.ids.has(_id))
-						return [ "u"/* update */, doc, "updateDescription" in next && next.updateDescription.updatedFields && Object.keys(next.updateDescription.updatedFields) ];
+					if (subscription.ids.has(_id)) {
+						const updatedFields = "updateDescription" in next ? [
+							...Object.keys(next.updateDescription.updatedFields ?? {}),
+							...next.updateDescription.removedFields ?? []
+						] : null;
+						
+						return [ "u"/* update */, doc, updatedFields ? (updatedFields.length ? updatedFields : true) : undefined ];
+					}
 					
 					subscription.ids.add(_id);
 					
