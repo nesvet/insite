@@ -1,6 +1,6 @@
 {
 	"name": "insite-server",
-	"version": "2.3.3",
+	"version": "2.3.5",
 	"description": "inSite server",
 	"type": "module",
 	"main": "./dist/index.js",
