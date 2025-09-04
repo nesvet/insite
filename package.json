@@ -8,7 +8,7 @@
 		"./client": "./dist/client/index.js",
 		"./client/node": "./dist/client/node/index.js"
 	},
-	"packageManager": "bun@1.2.18",
+	"packageManager": "bun@1.2.21",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "bun .conveyer.js",
@@ -28,14 +28,14 @@
 	"dependencies": {
 		"@nesvet/n": "^1.2.1",
 		"eventemitter3": "^5.0.1",
-		"insite-common": "^2.3.3",
+		"insite-common": "^2.3.5",
 		"ws": "^8.18.3"
 	},
 	"devDependencies": {
-		"@nesvet/conveyer": "^2.6.1",
 		"@nesvet/eslint-config": "^2.1.2",
-		"@types/node": "^24.0.13",
+		"@types/node": "^24.3.1",
 		"@types/ws": "^8.18.1",
-		"typescript": "^5.8.3"
+		"cnvr": "^2.7.2",
+		"typescript": "^5.9.2"
 	}
 }
