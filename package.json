@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
-	"packageManager": "bun@1.2.18",
+	"packageManager": "bun@1.2.21",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "bun .conveyer.js",
@@ -23,12 +23,12 @@
 	"license": "MIT",
 	"dependencies": {
 		"@nesvet/n": "^1.2.1",
-		"insite-db": "^2.3.3"
+		"insite-db": "^2.3.5"
 	},
 	"devDependencies": {
-		"@nesvet/conveyer": "^2.6.1",
 		"@nesvet/eslint-config": "^2.1.2",
-		"@types/node": "^24.0.13",
-		"typescript": "^5.8.3"
+		"@types/node": "^24.3.1",
+		"cnvr": "^2.7.2",
+		"typescript": "^5.9.2"
 	}
 }
