@@ -24,15 +24,20 @@ function projectDocument<D extends Document>(document: D, projection: Projection
 	if (projection)
 		if (isInclusive) {
 			const projected: Record<string, unknown> = {};
+			
 			for (const key in projection) { // eslint-disable-line guard-for-in
 				const subprojection = projection[key];
+				const subdocument = document[key];
+				
 				projected[key] =
-					typeof subprojection == "object" ?
-						Array.isArray(document[key]) ?
-							document[key].map((item: Document) => projectDocument(item, subprojection, true, false)) :
-							projectDocument(document[key], subprojection, true, false) :
-						document[key];
+					subdocument &&
+					(typeof subprojection == "object" && typeof subdocument == "object") ?
+						Array.isArray(subdocument) ?
+							subdocument.map((item: Document) => projectDocument(item, subprojection, true, false)) :
+							projectDocument(subdocument, subprojection, true, false) :
+						subdocument;
 			}
+			
 			if (isTop && projection._id === 0)
 				delete projected._id;
 			
