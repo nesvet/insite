@@ -193,6 +193,8 @@ export class WS extends EventEmitter {
 		
 		this.#wasOpened = true;
 		
+		this.closedWith = null;
+		
 		this.#openPromise!.resolve();
 		
 		this.#defib();
@@ -262,6 +264,8 @@ export class WS extends EventEmitter {
 	
 	#handleWebSocketClose = (event: CloseEvent) => {
 		const { code, reason, wasClean } = event;
+		
+		this.closedWith = { code, reason, wasClean };
 		
 		if (this.#heartbeatTimeout) {
 			clearTimeout(this.#heartbeatTimeout);
@@ -342,6 +346,8 @@ export class WS extends EventEmitter {
 		if (this.#abortSignal?.aborted)
 			throw new DOMException("Operation aborted", "AbortError");
 		
+		this.closedWith = null;
+		
 		if (this.#openPromise?.isPending)
 			return this.#openPromise;
 		
@@ -411,6 +417,8 @@ export class WS extends EventEmitter {
 		}
 		
 	}
+	
+	closedWith: { code: number; reason: string; wasClean: boolean } | null = null;
 	
 	/**
 	 * Alias for `close()`
