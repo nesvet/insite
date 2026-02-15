@@ -9,7 +9,6 @@
 		--_height: auto;
 		--_width: auto;
 		--_opacity: 1;
-		--_display: block;
 		--_content-visibility: visible;
 	}
 }
@@ -17,7 +16,6 @@
 @layer collapse.base {
 
 	.iS-Collapse {
-		display: var(--_display);
 		box-sizing: border-box;
 		width: var(--_width);
 		height: var(--_height);
@@ -27,12 +25,6 @@
 
 		&[data-orientation="vertical"] {
 			overflow-y: hidden;
-			transition:
-				height var(--is-collapse-duration) var(--is-collapse-easing),
-				opacity var(--is-collapse-duration) var(--is-collapse-easing),
-				padding-block var(--is-collapse-duration) var(--is-collapse-easing),
-				content-visibility var(--is-collapse-duration) allow-discrete,
-				display var(--is-collapse-duration) allow-discrete;
 
 			&[data-state="closed"] {
 				--_height: 0px;
@@ -40,16 +32,18 @@
 
 				padding-block: 0;
 			}
+
+			&[data-mounted] {
+				transition:
+					height var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding-block var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
+			}
 		}
 
 		&[data-orientation="horizontal"] {
 			overflow-x: hidden;
-			transition:
-				width var(--is-collapse-duration) var(--is-collapse-easing),
-				opacity var(--is-collapse-duration) var(--is-collapse-easing),
-				padding-inline var(--is-collapse-duration) var(--is-collapse-easing),
-				content-visibility var(--is-collapse-duration) allow-discrete,
-				display var(--is-collapse-duration) allow-discrete;
 
 			&[data-state="closed"] {
 				--_width: 0px;
@@ -57,17 +51,18 @@
 
 				padding-inline: 0;
 			}
+
+			&[data-mounted] {
+				transition:
+					width var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding-inline var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
+			}
 		}
 
 		&[data-orientation="both"] {
 			overflow: hidden;
-			transition:
-				height var(--is-collapse-duration) var(--is-collapse-easing),
-				width var(--is-collapse-duration) var(--is-collapse-easing),
-				opacity var(--is-collapse-duration) var(--is-collapse-easing),
-				padding var(--is-collapse-duration) var(--is-collapse-easing),
-				content-visibility var(--is-collapse-duration) allow-discrete,
-				display var(--is-collapse-duration) allow-discrete;
 
 			&[data-state="closed"] {
 				--_height: 0px;
@@ -75,6 +70,15 @@
 				--_content-visibility: hidden;
 
 				padding: 0;
+			}
+
+			&[data-mounted] {
+				transition:
+					height var(--is-collapse-duration) var(--is-collapse-easing),
+					width var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
 			}
 		}
 
@@ -88,52 +92,10 @@
 
 	.iS-Collapse {
 
-		&[data-detached] {
-
-			&[data-state="closed"] {
-				--_display: none;
-			}
-
-			@starting-style {
-
-				&[data-orientation="vertical"][data-state="open"] {
-					--_height: 0px;
-					--_content-visibility: hidden;
-
-					padding-block: 0;
-				}
-
-				&[data-orientation="horizontal"][data-state="open"] {
-					--_width: 0px;
-					--_content-visibility: hidden;
-
-					padding-inline: 0;
-				}
-
-				&[data-orientation="both"][data-state="open"] {
-					--_height: 0px;
-					--_width: 0px;
-					--_content-visibility: hidden;
-
-					padding: 0;
-				}
-			}
-		}
-
 		&[data-fade] {
 
 			&[data-state="closed"] {
 				--_opacity: 0;
-			}
-
-			&[data-detached] {
-
-				@starting-style {
-
-					&[data-state="open"] {
-						--_opacity: 0;
-					}
-				}
 			}
 		}
 	}
