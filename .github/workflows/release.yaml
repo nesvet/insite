@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -27,7 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "lts/*"
+          node-version: "22"
 
       - run: bun install
 
@@ -35,7 +36,12 @@ jobs:
 
       - run: bun run build
 
+      - name: Manual Publish
+        if: github.event_name == 'workflow_dispatch'
+        run: bun run release
+
       - name: Version or Publish
+        if: github.event_name == 'push'
         uses: changesets/action@v1
         with:
           version: bun run version
