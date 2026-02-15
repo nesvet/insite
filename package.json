@@ -46,7 +46,7 @@
 		"@changesets/cli": "^2.29.8",
 		"@nesvet/eslint-config": "^2.2.8",
 		"@types/node": "^20.19.33",
-		"@types/react": "^18.3.28",
+		"@types/react": "^19.2.14",
 		"@types/ws": "^8.18.1",
 		"cnvr": "^2.8.7",
 		"eslint": "^9.39.2",
