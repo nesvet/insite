@@ -38,7 +38,7 @@
 		"clean": "bun run --filter '*' clean",
 		"knip": "knip",
 		"lint": "eslint .",
-		"release": "changeset publish",
+		"release": "changeset publish --no-git-tag",
 		"typecheck": "bun run --filter '*' --parallel typecheck",
 		"version": "changeset version"
 	},

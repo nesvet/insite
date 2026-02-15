@@ -7,7 +7,7 @@ Thanks for considering contributing! This project is maintained by one developer
 1. Fork and clone the repo
 2. Install dependencies: `bun install`
 3. Make your changes
-4. Run checks: `bun run lint`, `bun run typecheck`, `bun run build`
+4. Run checks: `bun run build`, `bun run lint`, `bun run typecheck`
 5. Open a PR
 
 ## What to contribute
