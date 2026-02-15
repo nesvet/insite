@@ -5,7 +5,7 @@ import type { WS } from "insite-ws/client";
 
 
 declare global {
-	var __initials: unknown[] | undefined;// eslint-disable-line no-var
+	var __initials: unknown[] | undefined;
 }
 
 

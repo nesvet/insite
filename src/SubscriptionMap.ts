@@ -38,7 +38,7 @@ export type Updates<I extends Item = Item> =
 export type UpdateHandler<I extends Item = Item> = (map: SubscriptionMap<I>, updated: Updated<I>, updates: Updates<I>) => void;
 
 declare global {
-	var __insite_subscription_map_sort_function: ((a: Item, b: Item) => -1 | 0 | 1) | undefined;// eslint-disable-line no-var, @typescript-eslint/naming-convention
+	var __insite_subscription_map_sort_function: ((a: Item, b: Item) => -1 | 0 | 1) | undefined;// eslint-disable-line camelcase, @typescript-eslint/naming-convention
 }
 
 function createSortFunction(sortList: SortList) {
