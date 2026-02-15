@@ -6,18 +6,14 @@ import {
 } from "@nesvet/n";
 import type { AbilitiesSchema } from "insite-common";
 import { ChangeStreamDocument, Sort } from "insite-db";
-import {
-	CollectionMapPublication,
-	Projection,
-	Publication,
-	SubscriptionHandle
-} from "insite-subscriptions-server/ws";
+import { CollectionMapPublication, Projection, Publication } from "insite-subscriptions-server/ws";
 import type {
 	AbilitiesMap,
 	OrgDoc,
 	Orgs,
 	RoleDoc,
 	Roles,
+	Session,
 	SessionDoc,
 	Sessions,
 	User,
@@ -26,7 +22,7 @@ import type {
 } from "insite-users-server";
 
 
-export class AbilitiesPublication<AS extends AbilitiesSchema> extends Publication<AS> {
+export class AbilitiesPublication<AS extends AbilitiesSchema> extends Publication<AS, [], User<AS>, Session<AS>> {
 	constructor(abilities: AbilitiesMap<AS>) {
 		super("abilities", {
 			
@@ -48,7 +44,7 @@ export type RolesPublicationOptions = {
 	transform?: (roleDoc: object) => void;
 };
 
-export class RolesPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, RoleDoc> {
+export class RolesPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, RoleDoc, [], User<AS>, Session<AS>> {
 	constructor(roles: Roles<AS>, options: RolesPublicationOptions = {}) {
 		
 		const {
@@ -86,7 +82,7 @@ export class RolesPublication<AS extends AbilitiesSchema> extends CollectionMapP
 }
 
 
-const userSubscriptionChangeListenerMap = new WeakMap<SubscriptionHandle, (next: ChangeStreamDocument<UserDoc>) => void>();
+const userSubscriptionChangeListenerMap = new WeakMap<object, (next: ChangeStreamDocument<UserDoc>) => void>();
 
 export type UserPublicationOptions = {
 	fieldsToUpdate?: string[];
@@ -95,7 +91,7 @@ export type UserPublicationOptions = {
 	public?: boolean;
 };
 
-export class UserPublication<AS extends AbilitiesSchema> extends Publication<AS> {
+export class UserPublication<AS extends AbilitiesSchema> extends Publication<AS, [ boolean ], User<AS>, Session<AS>> {
 	constructor(users: Users<AS>, options: UserPublicationOptions = {}) {
 		
 		const {
@@ -207,7 +203,7 @@ export type UsersPublicationOptions = {
 	transform?: (userDoc: object) => void;
 };
 
-export class UsersPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, UserDoc> {
+export class UsersPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, UserDoc, [], User<AS>, Session<AS>> {
 	constructor(users: Users<AS>, options: UsersPublicationOptions = {}) {
 		
 		const {
@@ -253,7 +249,7 @@ export type UsersExtendedPublicationOptions = {
 	transform?: (userDoc: object) => void;
 };
 
-export class UsersExtendedPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, UserDoc> {
+export class UsersExtendedPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, UserDoc, [], User<AS>, Session<AS>> {
 	constructor(users: Users<AS>, options: UsersExtendedPublicationOptions = {}) {
 		
 		const {
@@ -286,7 +282,7 @@ export class UsersExtendedPublication<AS extends AbilitiesSchema> extends Collec
 }
 
 
-export class SessionsPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, SessionDoc, [ userId: string ]> {
+export class SessionsPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, SessionDoc, [ string ], User<AS>, Session<AS>> {
 	constructor(sessions: Sessions<AS>) {
 		super(sessions.collection, "users.people.sessions", ({ user }, userId) =>
 			user?.abilities.inSite?.users && user.permissiveIds.includes(userId) && {
@@ -305,7 +301,7 @@ export type OrgsPublicationOptions = {
 	transform?: (orgDoc: object) => void;
 };
 
-export class OrgsPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, OrgDoc> {
+export class OrgsPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, OrgDoc, [], User<AS>, Session<AS>> {
 	constructor(orgs: Orgs<AS>, options: OrgsPublicationOptions = {}) {
 		
 		const {
@@ -339,7 +335,7 @@ export type OrgsExtendedPublicationOptions = {
 	transform?: (orgDoc: object) => void;
 };
 
-export class OrgsExtendedPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, OrgDoc> {
+export class OrgsExtendedPublication<AS extends AbilitiesSchema> extends CollectionMapPublication<AS, OrgDoc, [], User<AS>, Session<AS>> {
 	constructor(orgs: Orgs<AS>, options: OrgsExtendedPublicationOptions = {}) {
 		
 		const {
