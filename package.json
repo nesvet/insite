@@ -1,43 +1,56 @@
 {
-	"name": "insite-subscriptions-server",
-	"version": "2.3.5",
-	"description": "inSite subscriptions server side",
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"exports": {
-		".": "./dist/index.js",
-		"./ws": "./dist/ws/index.js"
-	},
-	"packageManager": "bun@1.2.21",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "bun .conveyer.js",
-		"postbuild": "tsc -p ."
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/nesvet/insite-subscriptions-server.git"
-	},
-	"keywords": [
-		"insite",
-		"subscriptions",
-		"server"
-	],
-	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
-	"license": "MIT",
-	"dependencies": {
-		"insite-common": "^2.3.5",
-		"insite-db": "^2.3.5",
-		"insite-users-server-ws": "^2.3.5",
-		"insite-ws": "^2.3.5",
-		"sift": "^16.0.1"
-	},
-	"devDependencies": {
-		"@nesvet/eslint-config": "^2.1.2",
-		"@types/node": "^24.3.1",
-		"@types/ws": "^8.18.1",
-		"cnvr": "^2.7.2",
-		"typescript": "^5.9.2"
-	}
+  "name": "insite-subscriptions-server",
+  "version": "2.4.0",
+  "description": "Server-side subscriptions/publications for inSite",
+  "keywords": [
+    "insite",
+    "subscriptions",
+    "publications",
+    "server"
+  ],
+  "homepage": "https://github.com/nesvet/insite#readme",
+  "bugs": {
+    "url": "https://github.com/nesvet/insite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nesvet/insite.git",
+    "directory": "packages/subscriptions-server"
+  },
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/nesvet"
+  },
+  "license": "MIT",
+  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./ws": "./dist/ws/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun .conveyer.js",
+    "postbuild": "tsc -p .",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "insite-common": "^2.4.0",
+    "insite-db": "^2.4.0",
+    "insite-users-server": "^2.4.0",
+    "insite-ws": "^2.4.0",
+    "sift": "^17.1.3"
+  },
+  "packageManager": "bun@1.3.9",
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
