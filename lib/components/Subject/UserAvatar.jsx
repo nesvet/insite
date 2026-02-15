@@ -5,6 +5,9 @@ import { classes } from "./Avatar";
 import { subscribe, unsubscribe } from "./subscriptions";
 
 
+/* eslint-disable react/destructuring-assignment, no-unused-vars */
+
+
 export class UserAvatar extends Component {
 	
 	render() {

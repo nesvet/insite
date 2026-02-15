@@ -6,6 +6,9 @@ import { ContextMenuItem } from "./Item";
 import { ContextMenu } from "./Menu";
 
 
+/* eslint-disable no-unused-vars */
+
+
 export class ContextMenuSubMenuItem extends ContextMenuItem {
 	
 	isHovered = false;

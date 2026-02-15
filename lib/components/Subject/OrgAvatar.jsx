@@ -5,6 +5,9 @@ import { classes } from "./Avatar";
 import { subscribe, unsubscribe } from "./subscriptions";
 
 
+/* eslint-disable no-unused-vars */
+
+
 export class OrgAvatar extends Component {
 	
 	render() {

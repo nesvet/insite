@@ -4,6 +4,9 @@ import { sizes } from "./styles";
 import { UserAvatar } from "./UserAvatar";
 
 
+/* eslint-disable react/destructuring-assignment */
+
+
 const fontSizeRatio = 1.77777778;
 
 const borderRatio = 35;
@@ -45,7 +48,6 @@ export const styles = {
 		backgroundColor: theme.palette.grey[400],
 		borderRadius: "50%",
 		overflow: "hidden",
-		lineHeight: .9,
 		textTransform: "uppercase",
 		userSelect: "none",
 		
@@ -56,7 +58,9 @@ export const styles = {
 		
 		"$org &": {
 			borderRadius: "20%",
-			fontSize: "1.4em"
+			fontSize: "1.4em",
+			lineHeight: 1.19,
+			alignItems: "flex-end"
 		}
 	},
 	
@@ -105,3 +109,5 @@ Avatar.sizes = sizes;
 Avatar.borders = borders;
 
 Avatar.styles = styles;
+
+Avatar.classes = classes;
