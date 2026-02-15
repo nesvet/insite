@@ -1,6 +1,9 @@
 import type { StreamerOptions } from "./types";
 
 
+/* eslint-disable @stylistic/max-statements-per-line */
+
+
 type Listener = {
 	(chunk: string): Promise<void> | void;
 };
