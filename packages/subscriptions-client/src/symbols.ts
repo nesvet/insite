@@ -1,0 +1,12 @@
+export const updateSymbol = Symbol("update");
+export const getHandleUpdateSymbol = Symbol("getHandleUpdate");
+export const setHandleUpdateSymbol = Symbol("setHandleUpdate");
+export const getAsUpdatesSymbol = Symbol("getAsUpdates");
+export const getAsInitialUpdatedSymbol = Symbol("getAsInitialUpdated");
+export const clearSymbol = Symbol("clear");
+export const subscribeSymbol = Symbol("subscribe");
+export const unsubscribeSymbol = Symbol("unsubscribe");
+export const renewSymbol = Symbol("renew");
+export const getSubscriptionSymbol = Symbol("getSubscription");
+export const getHandleSubscriptionSymbol = Symbol("getHandleSubscription");
+export const setHandleSubscriptionSymbol = Symbol("setHandleSubscription");
