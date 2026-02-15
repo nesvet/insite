@@ -6,7 +6,7 @@ import { extractBearerToken, extractQueryParams, extractUrlParams } from "./util
 import type { RequestParams, RequestQueryParams } from "./types";
 
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, @stylistic/max-statements-per-line */
 
 
 export function matches(request: Request, regExp: RegExp) {

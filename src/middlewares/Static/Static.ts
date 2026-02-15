@@ -61,7 +61,7 @@ export class StaticMiddleware extends ClassMiddleware {
 		}
 		
 		this.listeners = {
-			GET: [ [ _path ?? new RegExp(`^${path.join("/", root, "/")}(\\w[^\\/]*/)*[^\\/]+\\.[^\\/]`), this.#handler ] ]
+			GET: [ [ _path ?? new RegExp(String.raw`^${path.join("/", root, "/")}(\w[^\/]*/)*[^\/]+\.[^\/]`), this.#handler ] ]
 		};
 		
 	}

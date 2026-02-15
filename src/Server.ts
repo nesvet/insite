@@ -206,7 +206,7 @@ export class HTTPServer {
 					break;
 			}
 		
-		return (priority * 1000) + (depth * 10 - wildcards);
+		return (priority * 1000) + ((depth * 10) - wildcards);
 	}
 	
 	/** Add request listener */
