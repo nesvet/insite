@@ -12,9 +12,11 @@ import type { WSSubscriptionArgs } from "./types";
 export class CollectionMapSubscriptionHandle<
 	AS extends AbilitiesSchema = AbilitiesSchema,
 	D extends Document = Document,
-	RA extends any[] = any[]
-> extends GenericCollectionMapSubscriptionHandle<D, WSSubscriptionArgs<AS, RA>> {
-	constructor(...args: ConstructorParameters<typeof GenericCollectionMapSubscriptionHandle<D, WSSubscriptionArgs<AS, RA>>>) {
+	RA extends any[] = any[],
+	U = unknown,
+	S = unknown
+> extends GenericCollectionMapSubscriptionHandle<D, WSSubscriptionArgs<AS, RA, U, S>> {
+	constructor(...args: ConstructorParameters<typeof GenericCollectionMapSubscriptionHandle<D, WSSubscriptionArgs<AS, RA, U, S>>>) {
 		super(...args);
 	}
 }

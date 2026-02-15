@@ -58,31 +58,61 @@ export class CollectionMapSubscriptionHandle<
 	};
 	
 	collectionChangeListener = async (next: ChangeStreamDocument<D>) => {
+		if (skippedChangeStreamDocuments.has(next) || !("documentKey" in next))
+			return;
 		
-		if (
-			!skippedChangeStreamDocuments.has(next) &&
-			"documentKey" in next &&
-			(this.ids.has(next.documentKey._id as unknown as string) ? (
-				next.operationType !== "update" ||
-				!this.fields ||
-				(
-					next.updateDescription.updatedFields &&
-					Object.keys(next.updateDescription.updatedFields).some(field => this.fields!.has(field))
-				) ||
-				next.updateDescription.removedFields?.some(field => this.fields!.has(field))
-			) : (
-				"fullDocument" in next &&
-				this.match!(next.fullDocument!)
-			))
-		) {
-			clearTimeout(this.#flushTimeout);
-			
-			this.updates.push(await this.publication.fetchSubscription(this, next));
-			
-			this.#flushTimeout = setTimeout(this.flushUpdates, 1);
-		}
+		if (this.ids.has(next.documentKey._id as unknown as string)) {
+			if (next.operationType === "update" && this.fields) {
+				const { fields } = this;
+				
+				let isRelevantUpdate = false;
+				
+				const { updatedFields } = next.updateDescription;
+				
+				if (updatedFields)
+					for (const updatedField in updatedFields) { // eslint-disable-line guard-for-in
+						if (fields.has(updatedField)) {
+							isRelevantUpdate = true;
+							break;
+						}
+						
+						const dotIndex = updatedField.indexOf(".");
+						
+						if (dotIndex !== -1 && fields.has(updatedField.slice(0, dotIndex))) {
+							isRelevantUpdate = true;
+							break;
+						}
+					}
+				
+				const { removedFields } = next.updateDescription;
+				
+				if (!isRelevantUpdate && removedFields?.length)
+					for (const removedField of removedFields) {
+						if (fields.has(removedField)) {
+							isRelevantUpdate = true;
+							break;
+						}
+						
+						const dotIndex = removedField.indexOf(".");
+						
+						if (dotIndex !== -1 && fields.has(removedField.slice(0, dotIndex))) {
+							isRelevantUpdate = true;
+							break;
+						}
+					}
+				
+				if (!isRelevantUpdate)
+					return;
+			}
+		} else if (!("fullDocument" in next) || !this.match!(next.fullDocument!))
+			return;
+		
+		clearTimeout(this.#flushTimeout);
+		
+		this.updates.push(await this.publication.fetchSubscription(this, next));
+		
+		this.#flushTimeout = setTimeout(this.flushUpdates, 1);
 		
 	};
-	
 	
 }

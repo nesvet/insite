@@ -8,9 +8,11 @@ import type { WSSubscriptionArgs } from "./types";
 
 export class Publication<
 	AS extends AbilitiesSchema = AbilitiesSchema,
-	RA extends any[] = any[]
-> extends GenericPublication<WSSubscriptionArgs<AS, RA>> {
-	constructor(...args: ConstructorParameters<typeof GenericPublication<WSSubscriptionArgs<AS, RA>>>) {
+	RA extends any[] = any[],
+	U = unknown,
+	S = unknown
+> extends GenericPublication<WSSubscriptionArgs<AS, RA, U, S>> {
+	constructor(...args: ConstructorParameters<typeof GenericPublication<WSSubscriptionArgs<AS, RA, U, S>>>) {
 		super(...args);
 	}
 }

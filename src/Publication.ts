@@ -3,11 +3,11 @@ import type { PublicationProps, SubscriptionArgs } from "./types";
 
 
 declare global {
-	var __insite_publications: Map<string, Publication>;// eslint-disable-line no-var, @typescript-eslint/naming-convention
+	var __insite_publications: Map<string, Publication>;// eslint-disable-line @typescript-eslint/naming-convention, camelcase
 }
 
 export const publications =
-	globalThis.__insite_publications ??=
+	globalThis.__insite_publications ??=// eslint-disable-line camelcase
 		new Map();
 
 export class Publication<SA extends SubscriptionArgs = SubscriptionArgs> {
