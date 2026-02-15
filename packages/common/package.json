@@ -1,0 +1,50 @@
+{
+  "name": "insite-common",
+  "version": "2.4.0",
+  "description": "Shared types, utilities, and schemas for inSite stack",
+  "keywords": [
+    "insite",
+    "common",
+    "types",
+    "utilities"
+  ],
+  "homepage": "https://github.com/nesvet/insite#readme",
+  "bugs": {
+    "url": "https://github.com/nesvet/insite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nesvet/insite.git",
+    "directory": "packages/common"
+  },
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/nesvet"
+  },
+  "license": "MIT",
+  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+  "type": "module",
+  "exports": {
+    ".": "./dist/common/index.js",
+    "./frontend": "./dist/frontend/index.js",
+    "./backend": "./dist/backend/index.js"
+  },
+  "main": "./dist/common/index.js",
+  "module": "./dist/common/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun .conveyer.js",
+    "postbuild": "tsc -p .",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "packageManager": "bun@1.3.9",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
