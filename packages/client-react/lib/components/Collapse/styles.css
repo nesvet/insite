@@ -1,0 +1,102 @@
+@layer collapse.variables, collapse.base, collapse.variants;
+
+@layer collapse.variables {
+
+	.iS-Collapse {
+		--is-collapse-duration: 300ms;
+		--is-collapse-easing: cubic-bezier(.4, 0, .2, 1);
+
+		--_height: auto;
+		--_width: auto;
+		--_opacity: 1;
+		--_content-visibility: visible;
+	}
+}
+
+@layer collapse.base {
+
+	.iS-Collapse {
+		box-sizing: border-box;
+		width: var(--_width);
+		height: var(--_height);
+		opacity: var(--_opacity);
+		content-visibility: var(--_content-visibility);
+		interpolate-size: allow-keywords;
+
+		&[data-orientation="vertical"] {
+			overflow-y: hidden;
+
+			&[data-state="closed"] {
+				--_height: 0px;
+				--_content-visibility: hidden;
+
+				padding-block: 0;
+			}
+
+			&[data-mounted] {
+				transition:
+					height var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding-block var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
+			}
+		}
+
+		&[data-orientation="horizontal"] {
+			overflow-x: hidden;
+
+			&[data-state="closed"] {
+				--_width: 0px;
+				--_content-visibility: hidden;
+
+				padding-inline: 0;
+			}
+
+			&[data-mounted] {
+				transition:
+					width var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding-inline var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
+			}
+		}
+
+		&[data-orientation="both"] {
+			overflow: hidden;
+
+			&[data-state="closed"] {
+				--_height: 0px;
+				--_width: 0px;
+				--_content-visibility: hidden;
+
+				padding: 0;
+			}
+
+			&[data-mounted] {
+				transition:
+					height var(--is-collapse-duration) var(--is-collapse-easing),
+					width var(--is-collapse-duration) var(--is-collapse-easing),
+					opacity var(--is-collapse-duration) var(--is-collapse-easing),
+					padding var(--is-collapse-duration) var(--is-collapse-easing),
+					content-visibility var(--is-collapse-duration) allow-discrete;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			transition-duration: 0s !important;
+		}
+	}
+}
+
+@layer collapse.variants {
+
+	.iS-Collapse {
+
+		&[data-fade] {
+
+			&[data-state="closed"] {
+				--_opacity: 0;
+			}
+		}
+	}
+}
