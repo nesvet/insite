@@ -1,5 +1,7 @@
 # insite-common
 
+[![npm](https://img.shields.io/npm/v/insite-common)](https://www.npmjs.com/package/insite-common)
+
 Shared types and backend utilities for the inSite ecosystem. Defines ability schema for RBAC and configuration, plus server helpers for HTTP(S), SSL, and client IP resolution.
 
 Part of [inSite](../../README.md) — used by all inSite packages.

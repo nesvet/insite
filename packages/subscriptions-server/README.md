@@ -1,5 +1,7 @@
 # insite-subscriptions-server
 
+[![npm](https://img.shields.io/npm/v/insite-subscriptions-server)](https://www.npmjs.com/package/insite-subscriptions-server)
+
 Server-side pub/sub layer for inSite. Defines publications (named data sources), subscription handles, and WebSocket integration for real-time updates.
 
 Part of [inSite](../../README.md) — wires to [insite-ws](../ws/README.md) and [insite-users-server-ws](../users-server-ws/README.md); uses [insite-db](../db/README.md).

@@ -1,5 +1,7 @@
 # insite-http
 
+[![npm](https://img.shields.io/npm/v/insite-http)](https://www.npmjs.com/package/insite-http)
+
 HTTP/HTTPS server for Node.js with middleware architecture, path-based routing, and built-in middlewares for static files and HTML templates.
 
 Part of [inSite](../../README.md) — uses [insite-common](../common/README.md) for server creation.

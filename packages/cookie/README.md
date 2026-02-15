@@ -1,5 +1,7 @@
 # insite-cookie
 
+[![npm](https://img.shields.io/npm/v/insite-cookie)](https://www.npmjs.com/package/insite-cookie)
+
 Cookie support for inSite — token-based handoff for setting cookies over WebSocket. Browsers do not expose `Set-Cookie` for WebSocket responses; this package uses a token handoff: server sends token via WS, client fetches HTTP endpoint with token, receives `Set-Cookie`.
 
 Part of [inSite](../../README.md) — depends on [insite-users-server-ws](../users-server-ws/README.md), [insite-http](../http/README.md), [insite-ws](../ws/README.md), [insite-common](../common/README.md).

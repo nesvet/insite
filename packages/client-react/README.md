@@ -1,5 +1,7 @@
 # insite-client-react
 
+[![npm](https://img.shields.io/npm/v/insite-client-react)](https://www.npmjs.com/package/insite-client-react)
+
 React components for displaying subjects (users and organizations), context menus, and collapse animations.
 
 Part of [inSite](../../README.md) — uses [insite-users-client](../users-client/README.md) for Subject live updates.

@@ -1,5 +1,7 @@
 # insite-users-client
 
+[![npm](https://img.shields.io/npm/v/insite-users-client)](https://www.npmjs.com/package/insite-users-client)
+
 Client-side library for users, organizations, and roles in inSite. Subscribes to publications over WebSocket and wires data into reactive structures (orgs, users, current user) with automatic cross-linking and sync.
 
 Part of [inSite](../../README.md) — requires [insite-ws](../ws/README.md) and [insite-subscriptions-client](../subscriptions-client/README.md).

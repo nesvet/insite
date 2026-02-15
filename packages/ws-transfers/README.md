@@ -1,5 +1,7 @@
 # insite-ws-transfers
 
+[![npm](https://img.shields.io/npm/v/insite-ws-transfers)](https://www.npmjs.com/package/insite-ws-transfers)
+
 File transfers over WebSockets for the inSite stack. Streams data in chunks with progress tracking, abort support, and receiver confirmation.
 
 Part of [inSite](../../README.md) — built on [insite-ws](../ws/README.md). Requires `WSServer` or `WS` from that package.

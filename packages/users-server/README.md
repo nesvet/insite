@@ -1,5 +1,7 @@
 # insite-users-server
 
+[![npm](https://img.shields.io/npm/v/insite-users-server)](https://www.npmjs.com/package/insite-users-server)
+
 Server-side core for users, organizations, roles, sessions, and avatars in the inSite stack. In-memory domain models backed by MongoDB with change streams for real-time sync, role-based abilities, and hierarchical org structure.
 
 Part of [inSite](../../README.md) — uses [insite-db](../db/README.md) and [insite-common](../common/README.md). WebSocket integration via [insite-users-server-ws](../users-server-ws/README.md).

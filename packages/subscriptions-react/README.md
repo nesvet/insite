@@ -1,5 +1,7 @@
 # insite-subscriptions-react
 
+[![npm](https://img.shields.io/npm/v/insite-subscriptions-react)](https://www.npmjs.com/package/insite-subscriptions-react)
+
 React components for subscribing to inSite publications over WebSocket.
 
 Part of [inSite](../../README.md) — requires [insite-ws](../ws/README.md) and [insite-subscriptions-client](../subscriptions-client/README.md).

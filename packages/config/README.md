@@ -1,5 +1,7 @@
 # insite-config
 
+[![npm](https://img.shields.io/npm/v/insite-config)](https://www.npmjs.com/package/insite-config)
+
 Runtime configuration storage backed by MongoDB. Define a schema with defaults, read and update values in memory, persist to a `config` collection. Changes sync automatically via MongoDB change streams.
 
 Part of [inSite](../../README.md) — requires [insite-db](../db/README.md). MongoDB must support change streams (replica set or sharded cluster).

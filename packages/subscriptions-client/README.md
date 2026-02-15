@@ -1,5 +1,7 @@
 # insite-subscriptions-client
 
+[![npm](https://img.shields.io/npm/v/insite-subscriptions-client)](https://www.npmjs.com/package/insite-subscriptions-client)
+
 Client-side library for subscribing to inSite publications over WebSocket. Provides reactive containers for three data shapes — object, array, and map — that apply server updates and notify your handlers.
 
 Part of [inSite](../../README.md) — requires [insite-ws](../ws/README.md). Pairs with [insite-subscriptions-server](../subscriptions-server/README.md).

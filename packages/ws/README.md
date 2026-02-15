@@ -1,5 +1,7 @@
 # insite-ws
 
+[![npm](https://img.shields.io/npm/v/insite-ws)](https://www.npmjs.com/package/insite-ws)
+
 WebSocket abstraction for the inSite stack. Server and client with heartbeat, request/response protocol, and connection quality tracking.
 
 Part of [inSite](../../README.md) — used by [insite-ws-transfers](../ws-transfers/README.md), [insite-users-server-ws](../users-server-ws/README.md), [insite-subscriptions-server](../subscriptions-server/README.md), [insite-cookie](../cookie/README.md).

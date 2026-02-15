@@ -1,5 +1,7 @@
 # insite-users-server-ws
 
+[![npm](https://img.shields.io/npm/v/insite-users-server-ws)](https://www.npmjs.com/package/insite-users-server-ws)
+
 WebSocket layer for the inSite users stack. Wires [insite-users-server](../users-server/README.md) (users, orgs, roles, sessions, avatars) to a WebSocket server ([insite-ws](../ws/README.md)).
 
 Part of [inSite](../../README.md) — depends on [insite-users-server](../users-server/README.md), [insite-ws](../ws/README.md), [insite-subscriptions-server](../subscriptions-server/README.md), [insite-ws-transfers](../ws-transfers/README.md).

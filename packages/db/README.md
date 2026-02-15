@@ -1,5 +1,7 @@
 # insite-db
 
+[![npm](https://img.shields.io/npm/v/insite-db)](https://www.npmjs.com/package/insite-db)
+
 MongoDB layer for inSite — connection, collection management, Change Streams, JSON Schema validation, and indexes.
 
 Part of [inSite](../../README.md) — used by [insite-server](../server/README.md), [insite-config](../config/README.md), [insite-users-server](../users-server/README.md), [insite-subscriptions-server](../subscriptions-server/README.md).

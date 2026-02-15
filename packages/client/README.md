@@ -1,5 +1,7 @@
 # insite-client
 
+[![npm](https://img.shields.io/npm/v/insite-client)](https://www.npmjs.com/package/insite-client)
+
 Client-side inSite SDK — WebSocket, auth, subscriptions, file transfers. Single entry point for connecting to an inSite server.
 
 Part of [inSite](../../README.md) — built on [insite-ws](../ws/README.md), [insite-cookie](../cookie/README.md), [insite-users-client](../users-client/README.md), [insite-subscriptions-client](../subscriptions-client/README.md), [insite-ws-transfers](../ws-transfers/README.md).

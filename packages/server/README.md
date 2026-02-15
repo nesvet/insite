@@ -1,5 +1,7 @@
 # insite-server
 
+[![npm](https://img.shields.io/npm/v/insite-server)](https://www.npmjs.com/package/insite-server)
+
 Orchestrator for the inSite server. Wires MongoDB, HTTP, WebSocket, users, subscriptions, cookies, and config into a single initializable instance.
 
 Part of [inSite](../../README.md) — composes [insite-db](../db/README.md), [insite-http](../http/README.md), [insite-ws](../ws/README.md), [insite-users-server](../users-server/README.md), [insite-users-server-ws](../users-server-ws/README.md), [insite-subscriptions-server](../subscriptions-server/README.md), [insite-ws-transfers](../ws-transfers/README.md), [insite-config](../config/README.md), [insite-cookie](../cookie/README.md), [insite-common](../common/README.md).
