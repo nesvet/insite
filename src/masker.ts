@@ -9,10 +9,10 @@ type MaskConfig = {
 };
 
 const enum FieldType {
-	Pii = 2,
-	Sensitive = 1,
+	Unknown = -1,
 	Skip = 0,
-	Unknown = -1
+	Sensitive = 1,
+	Pii = 2
 }
 
 
