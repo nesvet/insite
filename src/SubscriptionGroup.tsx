@@ -8,6 +8,9 @@ import {
 } from "insite-subscriptions-client";
 
 
+/* eslint-disable react/destructuring-assignment */
+
+
 type SubscriptionGroupValues = any[] & Record<string, any>;// eslint-disable-line @typescript-eslint/no-explicit-any
 
 type Props = {

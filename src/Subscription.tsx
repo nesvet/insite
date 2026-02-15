@@ -15,6 +15,9 @@ import {
 } from "insite-subscriptions-client";
 
 
+/* eslint-disable react/destructuring-assignment */
+
+
 type Value = SubscriptionArrayWithSubscription | SubscriptionMapWithSubscription | SubscriptionObjectWithSubscription;
 
 type Props = {
