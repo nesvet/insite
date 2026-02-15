@@ -1,35 +1,50 @@
 {
-	"name": "insite-users-client",
-	"version": "2.3.5",
-	"description": "inSite users client side",
-	"type": "module",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"packageManager": "bun@1.2.21",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "bun .conveyer.js",
-		"postbuild": "tsc -p ."
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/nesvet/insite-users-client.git"
-	},
-	"keywords": [
-		"insite",
-		"users",
-		"client"
-	],
-	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
-	"license": "MIT",
-	"dependencies": {
-		"@nesvet/n": "^1.2.1",
-		"insite-common": "^2.3.5",
-		"insite-subscriptions-client": "^2.3.5"
-	},
-	"devDependencies": {
-		"@nesvet/eslint-config": "^2.1.2",
-		"cnvr": "^2.7.2",
-		"typescript": "^5.9.2"
-	}
+  "name": "insite-users-client",
+  "version": "2.4.0",
+  "description": "Client-side users API for inSite",
+  "keywords": [
+    "insite",
+    "users",
+    "client",
+    "auth"
+  ],
+  "homepage": "https://github.com/nesvet/insite#readme",
+  "bugs": {
+    "url": "https://github.com/nesvet/insite/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nesvet/insite.git",
+    "directory": "packages/users-client"
+  },
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/nesvet"
+  },
+  "license": "MIT",
+  "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun .conveyer.js",
+    "postbuild": "tsc -p .",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nesvet/n": "^1.2.1",
+    "insite-common": "^2.4.0",
+    "insite-subscriptions-client": "^2.4.0"
+  },
+  "packageManager": "bun@1.3.9",
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
