@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Environment (preemptive)
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# IDE / Editor
+.idea/
+.vscode/
+.cursor/
+*.code-workspace

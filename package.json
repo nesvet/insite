@@ -1,0 +1,60 @@
+{
+	"name": "insite",
+	"version": "2.4.0",
+	"private": true,
+	"description": "Real-time full-stack framework: WebSocket server/client, MongoDB + Change Streams, pub/sub publications, users/orgs/roles with RBAC, cookie auth over WS, file transfers. TypeScript/Bun monorepo with server orchestrator, client SDK, and React UI components",
+	"keywords": [
+		"insite",
+		"websocket",
+		"mongodb",
+		"realtime",
+		"fullstack",
+		"framework",
+		"typescript",
+		"bun",
+		"rbac"
+	],
+	"homepage": "https://github.com/nesvet/insite#readme",
+	"bugs": {
+		"url": "https://github.com/nesvet/insite/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nesvet/insite.git"
+	},
+	"funding": {
+		"type": "patreon",
+		"url": "https://www.patreon.com/nesvet"
+	},
+	"license": "MIT",
+	"author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
+	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"build": "bun run --parallel --filter insite-common --filter insite-db build && bun run --parallel --filter insite-config --filter insite-ws --filter insite-http build && bun run --parallel --filter insite-ws-transfers --filter insite-subscriptions-client build && bun run --filter insite-users-server build && bun run --filter insite-subscriptions-server build && bun run --filter insite-users-server-ws build && bun run --parallel --filter insite-cookie --filter insite-users-client build && bun run --parallel --filter insite-client --filter insite-server --filter insite-subscriptions-react build",
+		"changeset": "changeset",
+		"clean": "bun run --filter '*' clean",
+		"knip": "knip",
+		"lint": "eslint .",
+		"release": "changeset publish",
+		"typecheck": "bun run --filter '*' --parallel typecheck",
+		"version": "changeset version"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.29.8",
+		"@nesvet/eslint-config": "^2.2.8",
+		"@types/node": "^20.19.33",
+		"@types/react": "^18.3.28",
+		"@types/ws": "^8.18.1",
+		"cnvr": "^2.8.7",
+		"eslint": "^9.39.2",
+		"knip": "^5.83.1",
+		"typescript": "^5.9.3"
+	},
+	"packageManager": "bun@1.3.9",
+	"engines": {
+		"node": ">=20.0.0"
+	}
+}
