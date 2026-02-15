@@ -5,7 +5,7 @@ import type { WS } from "./WS";
 
 
 declare global {
-	var __insite: { // eslint-disable-line no-var
+	var __insite: {
 		wss_url?: string;
 	} | undefined;
 }
