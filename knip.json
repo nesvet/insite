@@ -1,0 +1,19 @@
+{
+	"$schema": "https://unpkg.com/knip@5/schema.json",
+	"ignoreFiles": [ "**/stylelint.config.mjs" ],
+	"ignoreExportsUsedInFile": true,
+	"ignoreIssues": {
+		"packages/db/src/masker.ts": [ "exports" ],
+		"packages/ws-transfers/src/types.ts": [ "types" ],
+		"packages/ws/src/server/types.ts": [ "types" ]
+	},
+	"workspaces": {
+		".": {
+			"ignoreDependencies": [ "react" ]
+		},
+		"packages/client-react": {
+			"ignoreDependencies": [ "@material-ui/core", "@material-ui/icons", "@nesvet/missing-mui4-components" ],
+			"ignoreUnresolved": [ "\\$styles", "\\$app" ]
+		}
+	}
+}
