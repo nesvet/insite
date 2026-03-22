@@ -43,7 +43,7 @@
 	},
 	"dependencies": {
 		"@nesvet/ui-utils": "^1.0.47",
-		"react-avatar-editor": "^14"
+		"react-avatar-editor": "^15"
 	},
 	"peerDependencies": {
 		"@material-ui/core": "^4.12.0",
