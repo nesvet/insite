@@ -1,6 +1,6 @@
 {
   "name": "insite-http",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "HTTPS server for inSite",
   "keywords": [
     "insite",
