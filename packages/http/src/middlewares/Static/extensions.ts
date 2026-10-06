@@ -33,6 +33,15 @@ export const defaultExtensions = [
 	
 	[ "jpeg", {
 		mimeType: "image/jpeg"
+	} ],
+	
+	[ "png", {
+		mimeType: "image/png"
+	} ],
+	
+	[ "svg", {
+		isText: true,
+		mimeType: "image/svg+xml"
 	} ]
 	
 ].filter(Boolean) as Extension[];
