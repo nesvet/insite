@@ -1,6 +1,6 @@
 {
   "name": "insite-server",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Main inSite server entry point",
   "keywords": [
     "insite",
@@ -42,7 +42,7 @@
     "insite-config": "^2.4.0",
     "insite-cookie": "^2.4.0",
     "insite-db": "^2.4.0",
-    "insite-http": "^2.4.0",
+    "insite-http": "^2.4.1",
     "insite-subscriptions-server": "^2.4.0",
     "insite-users-server": "^2.4.0",
     "insite-users-server-ws": "^2.4.0",

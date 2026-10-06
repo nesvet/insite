@@ -88,7 +88,7 @@
     },
     "packages/http": {
       "name": "insite-http",
-      "version": "2.4.0",
+      "version": "2.4.1",
       "dependencies": {
         "@nesvet/n": "^1.2.1",
         "insite-common": "^2.4.0",
@@ -96,7 +96,7 @@
     },
     "packages/server": {
       "name": "insite-server",
-      "version": "2.4.0",
+      "version": "2.4.1",
       "dependencies": {
         "@nesvet/n": "^1.2.1",
         "insite-common": "^2.4.0",
