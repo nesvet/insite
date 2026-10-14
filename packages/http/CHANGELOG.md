@@ -1,5 +1,11 @@
 # insite-http
 
+## 2.4.3
+
+### Patch Changes
+
+- Add `lang` option to the HTML template, default `en` (was hardcoded `ru`)
+
 ## 2.4.2
 
 ### Patch Changes

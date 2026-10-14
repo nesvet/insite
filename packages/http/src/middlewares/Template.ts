@@ -36,6 +36,7 @@ type Options = {
 	title?: string;
 	css?: string[] | string;
 	rootId?: string;
+	lang?: string;
 	head?: {
 		links?: HeadLink[];
 		meta?: HeadMeta[];
@@ -100,6 +101,7 @@ export class TemplateMiddleware extends ClassMiddleware {
 		title = INSITE_TITLE ?? "inSite",
 		css = [],
 		rootId = "root",
+		lang = "en",
 		head = {}
 	}: Options = {}) {
 		super();
@@ -116,7 +118,7 @@ export class TemplateMiddleware extends ClassMiddleware {
 		
 		this.#html =
 			"<!DOCTYPE html>" +
-			"<html lang=\"ru\">" +
+			`<html lang="${escapeAttribute(lang)}">` +
 			"<head>" +
 			"<meta charset=\"utf-8\" />" +
 			"<meta name=\"viewport\" content=\"minimum-scale=1, initial-scale=1, width=device-width\" />" +

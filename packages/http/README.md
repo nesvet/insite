@@ -105,7 +105,7 @@ Options: src, root, path, extensions, resolved, restricted, preloaded
 
 ### TemplateMiddleware
 
-Options: path, globals, title, css, rootId
+Options: path, globals, title, css, rootId, lang (default `en`), head
 
 ## SSL / HTTPS
 
