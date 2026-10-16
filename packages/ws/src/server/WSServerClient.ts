@@ -148,26 +148,16 @@ export class WSServerClient extends WebSocket {
 			}
 		});
 		
-		const { terminate } = this;
-		
 		Object.assign(this, {
 			isWebSocketServerClient: true,
 			isWebSocketServer: false,
 			isWebSocket: false,
 			[defibSymbol]: WSServerClient.prototype[defibSymbol],
 			latency: 0,
+			[requestCounterSymbol]: 0,
 			[heartbeatIntervalSymbol]: WSServerClient.makeHeartbeatInterval.call(this),
 			sendMessage: WSServerClient.prototype.sendMessage,
-			sendRequest: WSServerClient.prototype.sendRequest,
-			terminate() { /* Workaround Bun's WebSocket#terminate bug */
-				
-				try {
-					terminate.call(this);
-				} catch (error) {
-					console.error(error);
-				}
-				
-			}
+			sendRequest: WSServerClient.prototype.sendRequest
 		});
 		
 	}
