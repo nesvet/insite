@@ -124,10 +124,6 @@ export class WSServer<WSSC extends WSServerClient = WSServerClient> extends WebS
 	
 	#handleConnection(wssc: WSSC, request: http.IncomingMessage) {
 		
-		/* Compatibility with Bun */
-		if (!(wssc instanceof WSServerClient))
-			WSServerClient.extend.call(wssc);
-		
 		Object.assign(wssc, {
 			wss: this,
 			userAgent: request.headers["user-agent"] ?? "",

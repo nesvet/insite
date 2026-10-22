@@ -130,38 +130,6 @@ export class WSServerClient extends WebSocket {
 		}, HEARTBEAT_INTERVAL);
 	}
 	
-	/* Compatibility with Bun */
-	static extend(this: WSServerClient) {
-		
-		Object.defineProperties(this, {
-			isConnecting: {
-				get: Object.getOwnPropertyDescriptor(WSServerClient.prototype, "isConnecting")!.get
-			},
-			isOpen: {
-				get: Object.getOwnPropertyDescriptor(WSServerClient.prototype, "isOpen")!.get
-			},
-			isClosing: {
-				get: Object.getOwnPropertyDescriptor(WSServerClient.prototype, "isClosing")!.get
-			},
-			isClosed: {
-				get: Object.getOwnPropertyDescriptor(WSServerClient.prototype, "isClosed")!.get
-			}
-		});
-		
-		Object.assign(this, {
-			isWebSocketServerClient: true,
-			isWebSocketServer: false,
-			isWebSocket: false,
-			[defibSymbol]: WSServerClient.prototype[defibSymbol],
-			latency: 0,
-			[requestCounterSymbol]: 0,
-			[heartbeatIntervalSymbol]: WSServerClient.makeHeartbeatInterval.call(this),
-			sendMessage: WSServerClient.prototype.sendMessage,
-			sendRequest: WSServerClient.prototype.sendRequest
-		});
-		
-	}
-	
 	static handleConnect(this: WSServerClient) {
 		
 		this.on("message", WSServerClient.handleMessage);
@@ -232,9 +200,7 @@ export class WSServerClient extends WebSocket {
 		
 	}
 	
-	static handleError(this: WSServerClient, error: Error | Event | undefined) {
-		if (error instanceof Event)
-			error = undefined;
+	static handleError(this: WSServerClient, error: Error | undefined) {
 		
 		if (!this.wss[isQuietSymbol])
 			console.error(

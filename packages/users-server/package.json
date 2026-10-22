@@ -50,7 +50,6 @@
     "insite-common": "^2.4.0",
     "insite-db": "^2.4.0"
   },
-  "packageManager": "bun@1.3.9",
   "engines": {
     "node": ">=20.0.0"
   }
