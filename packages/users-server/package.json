@@ -1,6 +1,6 @@
 {
   "name": "insite-users-server",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Server-side users, orgs, roles, sessions for inSite",
   "keywords": [
     "insite",
@@ -47,8 +47,8 @@
     "@nesvet/n": "^1.2.1",
     "@node-rs/argon2": "^2.0.2",
     "eventemitter3": "^5.0.4",
-    "insite-common": "^2.4.0",
-    "insite-db": "^2.4.0"
+    "insite-common": "^2.5.0",
+    "insite-db": "^2.5.0"
   },
   "engines": {
     "node": ">=20.0.0"

@@ -1,6 +1,6 @@
 {
 	"name": "insite",
-	"version": "2.4.0",
+	"version": "2.5.0",
 	"private": true,
 	"description": "Real-time full-stack framework: WebSocket server/client, MongoDB + Change Streams, pub/sub publications, users/orgs/roles with RBAC, cookie auth over WS, file transfers. TypeScript/Bun monorepo with server orchestrator, client SDK, and React UI components",
 	"keywords": [
@@ -34,16 +34,13 @@
 	],
 	"scripts": {
 		"build": "bun run --parallel --filter insite-common --filter insite-db build && bun run --parallel --filter insite-config --filter insite-ws --filter insite-http build && bun run --parallel --filter insite-ws-transfers --filter insite-subscriptions-client build && bun run --filter insite-users-server build && bun run --filter insite-subscriptions-server build && bun run --filter insite-users-server-ws build && bun run --parallel --filter insite-cookie --filter insite-users-client build && bun run --parallel --filter insite-client --filter insite-server --filter insite-subscriptions-react build",
-		"changeset": "changeset",
 		"clean": "bun run --filter '*' clean",
 		"knip": "knip",
 		"lint": "eslint .",
-		"release": "changeset publish --no-git-tag",
-		"typecheck": "bun run --filter '*' --parallel typecheck",
-		"version": "changeset version"
+		"release": "bun scripts/release.mjs",
+		"typecheck": "bun run --filter '*' --parallel typecheck"
 	},
 	"devDependencies": {
-		"@changesets/cli": "^2.29.8",
 		"@nesvet/eslint-config": "^2.2.8",
 		"@types/node": "^20.19.33",
 		"@types/react": "^18.3.28",

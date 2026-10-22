@@ -42,17 +42,5 @@ jobs:
 
       - run: bun run knip
 
-      - name: Manual Publish
-        if: github.event_name == 'workflow_dispatch'
+      - name: Publish
         run: bun run release
-
-      - name: Version or Publish
-        if: github.event_name == 'push'
-        uses: changesets/action@v1.7.0
-        with:
-          version: bun run version
-          publish: bun run release
-          commit: "chore: version packages"
-          title: "chore: version packages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

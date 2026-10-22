@@ -1,6 +1,6 @@
 {
   "name": "insite-config",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Configuration loader for inSite server",
   "keywords": [
     "insite",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-db": "^2.4.0"
+    "insite-db": "^2.5.0"
   },
   "engines": {
     "node": ">=20.0.0"

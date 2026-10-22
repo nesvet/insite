@@ -1,6 +1,6 @@
 {
   "name": "insite-http",
-  "version": "2.4.3",
+  "version": "2.5.0",
   "description": "HTTPS server for inSite",
   "keywords": [
     "insite",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-common": "^2.4.0"
+    "insite-common": "^2.5.0"
   },
   "engines": {
     "node": ">=20.0.0"

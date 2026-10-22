@@ -1,5 +1,11 @@
 # insite-http
 
+## 2.5.0
+
+### Changed
+
+- Version aligned with the other 2.5.0 packages. Behavior is unchanged. Internal dependencies are `^2.5.0`.
+
 ## 2.4.3
 
 ### Patch Changes

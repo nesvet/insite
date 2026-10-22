@@ -1,6 +1,6 @@
 {
   "name": "insite-users-server-ws",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "WebSocket API for users in inSite",
   "keywords": [
     "insite",
@@ -40,12 +40,12 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-common": "^2.4.0",
-    "insite-db": "^2.4.0",
-    "insite-subscriptions-server": "^2.4.0",
-    "insite-users-server": "^2.4.0",
-    "insite-ws": "^2.4.0",
-    "insite-ws-transfers": "^2.4.0"
+    "insite-common": "^2.5.0",
+    "insite-db": "^2.5.0",
+    "insite-subscriptions-server": "^2.5.0",
+    "insite-users-server": "^2.5.0",
+    "insite-ws": "^2.5.0",
+    "insite-ws-transfers": "^2.5.0"
   },
   "engines": {
     "node": ">=20.0.0"

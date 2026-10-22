@@ -1,6 +1,6 @@
 {
   "name": "insite-ws",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "WebSocket abstraction (server + client, heartbeat, RPC)",
   "keywords": [
     "insite",
@@ -44,7 +44,7 @@
   "dependencies": {
     "@nesvet/n": "^1.2.1",
     "eventemitter3": "^5.0.4",
-    "insite-common": "^2.4.0",
+    "insite-common": "^2.5.0",
     "ws": "^8.19.0"
   },
   "engines": {
