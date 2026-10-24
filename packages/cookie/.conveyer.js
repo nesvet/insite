@@ -1,6 +1,5 @@
 import path from "node:path";
 import { Conveyer, ESBuild } from "cnvr";
-import { common, neutral, node20 } from "../../conveyer.config.js";
 
 
 const { NODE_ENV } = process.env;
@@ -12,17 +11,22 @@ new Conveyer(
 			title: "Server",
 			entryPoints: [ "src/server/index.ts" ],
 			outfile: path.resolve(distDir, "server", "index.js"),
-			...common,
-			...node20
+			format: "esm",
+			sourcemap: true,
+			external: [ true, "insite-*" ],
+			platform: "node",
+			target: "node22"
 		}),
 		new ESBuild({
 			title: "Client",
 			entryPoints: [ "src/client/index.ts" ],
 			outfile: path.resolve(distDir, "client", "index.js"),
-			external: true,
-			define: { "process.env.NODE_ENV": JSON.stringify(NODE_ENV) },
-			...common,
-			...neutral
+			format: "esm",
+			sourcemap: true,
+			external: [ true, "insite-*" ],
+			platform: "neutral",
+			target: "es2022",
+			define: { "process.env.NODE_ENV": JSON.stringify(NODE_ENV) }
 		})
 	],
 	{ initialCleanup: distDir }
