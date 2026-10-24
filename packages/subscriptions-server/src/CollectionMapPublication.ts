@@ -196,6 +196,7 @@ export class CollectionMapPublication<
 			
 			if (subscription.query) {
 				subscription.match = sift(subscription.query);
+				subscription.beginInitial();
 				this.collection.onChange(subscription.collectionChangeListener);
 			}
 		}
@@ -207,6 +208,7 @@ export class CollectionMapPublication<
 			const fetched = await this.fetchSubscription(subscription, null);
 			subscription.handler([ fetched ]);
 			subscription.updates = [];
+			subscription.releaseQueuedChanges();
 			
 		}));
 	}

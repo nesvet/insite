@@ -98,8 +98,15 @@ export class SubscriptionHandler<AS extends AbilitiesSchema> {
 		this.#wsSubscriptionMap.get(wssc)?.cancel(i);
 	
 	#handleClientClose = (wssc: WSSCWithUser<AS, User<AS>, Session<AS>>) => {
-		for (const subscription of this.#wsSubscriptionMap.get(wssc)?.values() ?? [])
+		const subscriptions = this.#wsSubscriptionMap.get(wssc);
+		
+		if (!subscriptions)
+			return;
+		
+		for (const subscription of subscriptions.values())
 			subscription.cancel();
+		
+		this.#wsSubscriptionMap.delete(wssc);
 		
 	};
 	

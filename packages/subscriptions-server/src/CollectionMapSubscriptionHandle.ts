@@ -43,10 +43,41 @@ export class CollectionMapSubscriptionHandle<
 	async changed(next: ChangeStreamDocument<D> | null) {
 		this.handler([ await this.publication.fetchSubscription(this, next) ]);
 		
+		if (next === null)
+			this.releaseQueuedChanges();
+		
 	}
 	
 	updates: unknown[] = [];
 	#flushTimeout?: ReturnType<typeof setTimeout>;
+	#awaitingInitial = true;
+	#queuedChanges: ChangeStreamDocument<D>[] = [];
+	#isCancelled = false;
+	
+	beginInitial() {
+		this.#isCancelled = false;
+		this.#awaitingInitial = true;
+		this.#queuedChanges = [];
+		
+	}
+	
+	releaseQueuedChanges() {
+		if (this.#isCancelled)
+			return;
+		
+		this.#awaitingInitial = false;
+		
+		const queuedChanges = this.#queuedChanges;
+		this.#queuedChanges = [];
+		
+		for (const next of queuedChanges) {
+			if (this.#isCancelled)
+				return;
+			
+			void this.collectionChangeListener(next);
+		}
+		
+	}
 	
 	flushUpdates = () => {
 		
@@ -58,6 +89,12 @@ export class CollectionMapSubscriptionHandle<
 	};
 	
 	collectionChangeListener = async (next: ChangeStreamDocument<D>) => {
+		if (this.#awaitingInitial) {
+			this.#queuedChanges.push(next);
+			
+			return;
+		}
+		
 		if (skippedChangeStreamDocuments.has(next) || !("documentKey" in next))
 			return;
 		
@@ -101,7 +138,10 @@ export class CollectionMapSubscriptionHandle<
 						}
 					}
 				
-				if (!isRelevantUpdate)
+				if (
+					!isRelevantUpdate &&
+					(!("fullDocument" in next) || !next.fullDocument || this.match!(next.fullDocument))
+				)
 					return;
 			}
 		} else if (!("fullDocument" in next) || !this.match!(next.fullDocument!))
@@ -114,5 +154,16 @@ export class CollectionMapSubscriptionHandle<
 		this.#flushTimeout = setTimeout(this.flushUpdates, 1);
 		
 	};
+	
+	cancel() {
+		this.#isCancelled = true;
+		clearTimeout(this.#flushTimeout);
+		this.#flushTimeout = undefined;
+		this.updates = [];
+		this.#queuedChanges = [];
+		
+		super.cancel();
+		
+	}
 	
 }
