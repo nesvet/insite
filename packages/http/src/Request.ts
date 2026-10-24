@@ -110,7 +110,7 @@ export class Request<P = RequestParams> extends IncomingMessage {
 	
 	#ip?: string;
 	
-	/** IPv4 */
+	/** Client address */
 	get ip() {
 		return (this.#ip ??= getRemoteAddress(this));
 	}

@@ -5,5 +5,5 @@ export const regexps = {
 	// eslint-disable-next-line unicorn/better-regex
 	sessionId: /^(?:[\dA-Fa-f]{16,32}\$[\dA-Fa-f]{16,32}|[0-9a-f]{24}~[A-Za-z0-9_-]{43})$/, // (?:old_format|new_format) - leave just the new after some time
 	role: /^[\d_a-z-]{1,64}$/,
-	ip: /^(?:\d{1,3}\.){3}\d{1,3}$/
+	ip: /^(?:(?:\d{1,3}\.){3}\d{1,3}|(?:[\dA-Fa-f]{0,4}:){2,7}[\dA-Fa-f]{0,4})$/
 };

@@ -75,7 +75,7 @@ const abilities: AbilitiesSchema = [
 
 ### getRemoteAddress
 
-Checks: `Forwarded`, `X-Forwarded-For`, `X-Real-IP`, `CF-Connecting-IP`, `True-Client-IP`. Falls back to `socket.remoteAddress`.
+Checks forwarding headers before `socket.remoteAddress`. A later request with the same `Host` and no forwarding header does not throw. An IPv4 value, including an IPv4 embedded in `::ffff:x.x.x.x`, is returned as four octets. A pure IPv6 address is returned as IPv6 without a zone id, not as `127.0.0.1`.
 
 ## Related
 
