@@ -263,6 +263,11 @@ export class Roles<AS extends AbilitiesSchema> extends Map<string, Role<AS>> {
 			updates.involves = this.cleanUpIds(updates.involves);
 		}
 		
+		const { abilities } = updates as unknown as { abilities?: GenericAbilities };
+		
+		if (abilities && typeof abilities == "object")
+			(updates as unknown as { abilities: GenericAbilities }).abilities = this.abilities.adjust(abilities);
+		
 		await this.collection.updateOne({ _id: roleId }, { $set: updates });
 		
 		return true;

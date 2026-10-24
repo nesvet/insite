@@ -38,7 +38,9 @@ export class Role<AS extends AbilitiesSchema> {
 			this.ownInvolveIds = ownInvolveIds;
 		
 		if (ownAbilities)
-			this.ownAbilities = ownAbilities as Abilities<AS>;
+			this.ownAbilities = typeof ownAbilities == "object" ?
+				this.#roles.abilities.adjust(ownAbilities) :
+				ownAbilities as Abilities<AS>;
 		
 		if (title !== undefined) {
 			this.title = title;
