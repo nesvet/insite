@@ -67,7 +67,7 @@ function connect(options: Options): Promise<{ client: MongoClient; db: DB; colle
 | `onConnect` | `(collections, db) => Promise<void>` | Optional callback after connect |
 | `...mongoClientOptions` | `MongoClientOptions` | Passed to MongoClient |
 
-Note: `localhost` in URL is replaced with `127.0.0.1`.
+Note: `localhost` in URL is replaced with `127.0.0.1`. A failed `client.connect()` is logged and thrown, and `onConnect` is not called. A successful call still returns `{ client, db, collections }`.
 
 ### Collections
 

@@ -30,7 +30,7 @@ export class Collections extends Map<string, Collection> {
 		let collection = this.get(name) ?? await this.#awaiting.get(name);
 		
 		if (!collection) {
-			const { promise, resolve } = Promise.withResolvers<Collection>();
+			const { promise, resolve, reject } = Promise.withResolvers<Collection>();
 			this.#awaiting.set(name, promise);
 			
 			try {
@@ -61,6 +61,10 @@ export class Collections extends Map<string, Collection> {
 				this[name] = collection;
 				
 				resolve(collection);
+			} catch (error) {
+				reject(error);
+				
+				throw error;
 			} finally {
 				this.#awaiting.delete(name);
 			}

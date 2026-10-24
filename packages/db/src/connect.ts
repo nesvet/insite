@@ -20,10 +20,13 @@ export async function connect({
 	
 	try {
 		await client.connect();
-		console.info("🌿 MongoDB Client connected to", url.replace(/(?<=\/\/)[^:]+?:[^@]+@/, "").replace(/[/?][^/]*$/, ""));
 	} catch (error) {
 		console.error("🌿❗️ MongoDB Client connection: ", error);
+		
+		throw error;
 	}
+	
+	console.info("🌿 MongoDB Client connected to", url.replace(/(?<=\/\/)[^:]+?:[^@]+@/, "").replace(/[/?][^/]*$/, ""));
 	
 	client
 		.on("close", () => console.error("🌿❗️ MongoDB socket closed"))
