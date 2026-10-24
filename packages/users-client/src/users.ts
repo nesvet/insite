@@ -33,7 +33,7 @@ export function handleUsers(this: UsersSubscriptionGroup, updated: SubscriptionM
 		const addedUserIndex = updated.added.findIndex(user => user._id === currentUser._id);
 		
 		if (~addedUserIndex)
-			updated.added[updatedUserIndex] = currentUser;
+			updated.added[addedUserIndex] = currentUser;
 		
 		for (const user of updated.added)
 			user.isUser = true;
