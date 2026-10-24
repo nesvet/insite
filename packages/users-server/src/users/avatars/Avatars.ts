@@ -49,6 +49,12 @@ export class Avatars {
 	async save(_id: string, type: string, data: string) {
 		const binaryData = Binary.createFromBase64(data.slice(data.indexOf(",")));
 		
+		if (!this.TYPES_ACCEPTED.includes(type))
+			throw new Error("avatar.unacceptable-format");
+		
+		if (binaryData.length() > this.MAX_SIZE)
+			throw new Error("avatar.size-exceeds-limit");
+		
 		const ts = Date.now().toString(36);
 		
 		await Promise.all([
