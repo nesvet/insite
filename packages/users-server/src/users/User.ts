@@ -231,9 +231,9 @@ export class User<AS extends AbilitiesSchema> {
 	
 	trimSessions() {
 		
-		const sessionsLimit = this.abilities.login?.sessionsLimit ?? 0;
+		const sessionsLimit = this.abilities.login?.sessionsLimit;
 		
-		if (this.sessions.size > sessionsLimit)
+		if (typeof sessionsLimit == "number" && this.sessions.size > sessionsLimit)
 			return this.#users.sessions.collection.deleteMany({
 				_id: {
 					$in: _ids(
