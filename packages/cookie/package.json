@@ -1,6 +1,6 @@
 {
   "name": "insite-cookie",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Cookie-based auth for inSite (client + server)",
   "keywords": [
     "insite",
