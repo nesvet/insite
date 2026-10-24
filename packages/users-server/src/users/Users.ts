@@ -16,6 +16,7 @@ import {
 	WatchedCollection
 } from "insite-db";
 import { AbilitiesMap } from "../abilities";
+import { regexps } from "../lib";
 import { Orgs } from "../orgs";
 import { Org } from "../orgs/Org";
 import { Roles } from "../roles";
@@ -35,6 +36,8 @@ const indexes: CollectionIndexes = [
 	[ { email: 1 }, { unique: true } ],
 	[ { org: 1 } ]
 ];
+
+let unknownUserPasswordHash: Promise<string> | undefined;
 
 
 export class Users<AS extends AbilitiesSchema> extends Map<string, User<AS>> {
@@ -292,7 +295,24 @@ export class Users<AS extends AbilitiesSchema> extends Map<string, User<AS>> {
 							updates.roles
 					);
 		
-		await this.collection.updateOne({ _id }, { $set: updates });
+		let nextPassword: string | undefined;
+		
+		if (updates.password !== undefined) {
+			if (typeof updates.password != "string" || updates.password === "")
+				throw new Error("emptypasswordisnotallowed");
+			
+			nextPassword = regexps.argon2.test(updates.password) ? updates.password : await hash(updates.password);
+			updates = { ...updates, password: nextPassword };
+		}
+		
+		const writes: Promise<unknown>[] = [
+			this.collection.updateOne({ _id }, { $set: updates })
+		];
+		
+		if (nextPassword !== undefined && nextPassword !== (user as { password?: string }).password)
+			writes.push(this.sessions.collection.deleteMany({ user: _id }));
+		
+		await Promise.all(writes);
 		
 		return true;
 	}
@@ -314,8 +334,15 @@ export class Users<AS extends AbilitiesSchema> extends Map<string, User<AS>> {
 	async login(email: string, password: string, sessionProps: Partial<SessionDoc>) {
 		const user = this.byEmail.get(email);
 		
-		if (!user)
+		if (!user) {
+			try {
+				await verify(await (unknownUserPasswordHash ??= hash("insite-unknown-user")), password);
+			} catch {
+				// verify may reject; the response is still usernotfound
+			}
+			
 			throw new Error("usernotfound");
+		}
 		
 		if (!await verify(user.password, password))
 			throw new Error("incorrectpassword");
