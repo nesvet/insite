@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import type { IncomingMessage } from "node:http";
-import { random, setWithTimeout } from "@nesvet/n";
+import { setWithTimeout } from "@nesvet/n";
 import type { AbilitiesSchema } from "insite-common";
 import type { UsersServer, WSSCWithUser } from "insite-users-server-ws";
 import { headers } from "../common";
@@ -58,7 +58,7 @@ export class CookieSetter<AS extends AbilitiesSchema> {
 	
 	set(wssc: WSSCWithUser<AS>, cookie: Cookie, options: CookieOptions, onSet?: () => void) {
 		
-		const token = `${Math.round(performance.now() * Number.MAX_SAFE_INTEGER).toString(36)}$${crypto.randomBytes(random(4, 8)).toString("hex")}`;
+		const token = crypto.randomBytes(32).toString("hex");
 		
 		setWithTimeout(tokenMap, token, [ cookie, options, onSet ], cookieTokenTimeout);
 		

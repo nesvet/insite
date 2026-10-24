@@ -73,7 +73,7 @@ Or use [insite-client](../client/README.md) with `cookie: {}`.
 |--------|------|-------------|
 | `CookieSetter` | class | Sets cookies via token handoff; session sync on connect/session change |
 | `CookieMiddleware` | class | HTTP middleware for `/cookie?token` |
-| `parseCookie` | function | Parses cookie string to `Record<string, unknown>` |
+| `parseCookie` | function | Parses a cookie string into `Record<string, unknown>`, splitting each pair on the first `=` |
 | `CookieMiddlewareOptions` | type | CookieMiddleware constructor options |
 
 **Client (`insite-cookie/client`):**
@@ -94,7 +94,7 @@ class CookieSetter<AS extends AbilitiesSchema>
 | Member | Signature | Description |
 |--------|------------|-------------|
 | constructor | `(options: Options<AS>)` | `usersServer` required; `domain` defaults to `process.env.INSITE_HOST`; `maxAge` defaults to session TTL |
-| set | `(wssc, cookie, options) => void` | Queues cookie, sends token; client fetches URL for Set-Cookie |
+| set | `(wssc, cookie, options) => void` | Queues cookie, sends a 32-byte token; client fetches `GET /cookie?token` for Set-Cookie |
 | unset | `(wssc, names) => void` | Clears cookies by name |
 | usersServer | `UsersServer<AS>` | Injected |
 | domain | `string \| undefined` | Cookie domain |

@@ -15,6 +15,11 @@ type MakeArg = CookieOptions & {
 	value: Cookie[keyof Cookie];
 };
 
+function assertCookiePart(value: string) {
+	if (value.includes(";") || value.includes("\r") || value.includes("\n") || value.includes("\0"))
+		throw new Error("Invalid cookie attribute");
+}
+
 
 export class CookieMiddleware extends ClassMiddleware {
 	constructor(options: Options = {}) {
@@ -36,7 +41,8 @@ export class CookieMiddleware extends ClassMiddleware {
 		if (pending) {
 			const [ cookie, options, onSet ] = pending;
 			
-			onSet?.();
+			if (onSet)
+				response.once("finish", onSet);
 			
 			return response.writeHead(200, {
 				"Content-Type": "text/plain; charset=utf-8",
@@ -49,6 +55,15 @@ export class CookieMiddleware extends ClassMiddleware {
 	
 	
 	static make({ name, value, maxAge, expiresAt, domain, path = "/", secure = true, httpOnly = true, sameSite = "Strict" }: MakeArg) {
+		assertCookiePart(name);
+		assertCookiePart(value);
+		
+		if (domain)
+			assertCookiePart(domain);
+		
+		if (typeof path == "string")
+			assertCookiePart(path);
+		
 		const cookie = [ `${name}=${value}` ];
 		
 		if (maxAge !== undefined)
