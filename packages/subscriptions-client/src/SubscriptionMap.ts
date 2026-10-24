@@ -37,48 +37,46 @@ export type Updates<I extends Item = Item> =
 
 export type UpdateHandler<I extends Item = Item> = (map: SubscriptionMap<I>, updated: Updated<I>, updates: Updates<I>) => void;
 
-declare global {
-	var __insite_subscription_map_sort_function: ((a: Item, b: Item) => -1 | 0 | 1) | undefined;// eslint-disable-line camelcase, @typescript-eslint/naming-convention
+function valueAt(item: Item, key: string) {
+	let value: unknown = item;
+	
+	for (const part of key.split(".")) {
+		if (value === null || value === undefined)
+			return;
+		
+		value = (value as Record<string, unknown>)[part];
+	}
+	
+	return value;
+}
+
+function isGreater(left: unknown, right: unknown) {
+	return (left as number) > (right as number);
 }
 
 function createSortFunction(sortList: SortList) {
+	const sortEntries = Object.entries(sortList);
 	
-	const tempScript = document.createElement("script");
-	
-	tempScript.textContent = `window.__insite_subscription_map_sort_function = function sort(a, b) { return ${
-		Object.entries(sortList)
-			.map(([ key, value ]) => {
-				if (key.includes("."))
-					key = key.replaceAll(".", "?.");
+	return (a: Item, b: Item) => {
+		for (const [ key, direction ] of sortEntries) {
+			const aValue = valueAt(a, key);
+			const bValue = valueAt(b, key);
+			
+			if (direction > 0) {
+				if (isGreater(aValue, bValue))
+					return 1;
 				
-				return value > 0 ? `a.${key} > b.${key} ? 1 : a.${key} < b.${key} ? -1 :` : `a.${key} < b.${key} ? 1 : a.${key} > b.${key} ? -1 :`;
-			})
-			.concat("0")
-			.join(" ")
-	};}`;
-	
-	document.head.append(tempScript);
-	
-	const sortFunction = globalThis.__insite_subscription_map_sort_function!;
-	
-	tempScript.remove();
-	delete globalThis.__insite_subscription_map_sort_function;
-	
-	return sortFunction;
+				if (isGreater(bValue, aValue))
+					return -1;
+			} else if (isGreater(bValue, aValue))
+				return 1;
+			else if (isGreater(aValue, bValue))
+				return -1;
+		}
+		
+		return 0;
+	};
 }
-
-// function createSortFunction(sortList: SortList) {
-//     return new Function(// eslint-disable-line no-new-func
-// 		"a"/* Item */,
-// 		"b"/* Item */,
-// 		`return ${
-// 			Object.entries(sortList)
-// 				.map(([ key, value ]) => value > 0 ? `a.${key} > b.${key} ? 1 : a.${key} < b.${key} ? -1 :` : `a.${key} < b.${key} ? 1 : a.${key} > b.${key} ? -1 :`)
-// 				.concat("0")
-// 				.join(" ")
-// 		}`
-// 	) as (a: Item, b: Item) => -1 | 0 | 1;
-// }
 
 
 export class SubscriptionMap<I extends Item = Item> extends Map<string, I> {
