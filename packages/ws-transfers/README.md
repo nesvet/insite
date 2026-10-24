@@ -108,7 +108,7 @@ Handles incoming transfers. Attaches `onTransfer` and `onceTransfer` to the WS i
 | `removeTransferListener(kind, listener?)` | Unregister; omit `listener` to remove all for kind |
 | `off(kind, listener?)` | Alias for `removeTransferListener` |
 
-**Properties:** `sizeLimit` — max transfer size.
+**Properties:** `sizeLimit` — max transfer size. A chunk, abort, or completion is applied only when it comes from the socket that opened the transfer. The transfer aborts when the summed length is greater than `sizeLimit` or a finite declared `size`.
 
 ### IncomingTransfer
 

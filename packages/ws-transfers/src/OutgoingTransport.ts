@@ -59,22 +59,42 @@ export class OutgoingTransport<
 	}
 	
 	private async handleConfirm(ws: WSORWSSC, id: string, confirmResponse: string) {
-		await this.#transfers.get(id)?.handleConfirm(confirmResponse);
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		await transfer.handleConfirm(confirmResponse);
 		
 	}
 	
 	private handleProgress(ws: WSORWSSC, id: string, progress: number) {
-		this.#transfers.get(id)?.handleProgress(progress);
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		transfer.handleProgress(progress);
 		
 	}
 	
 	private async handleCompleted(ws: WSORWSSC, id: string) {
-		await this.#transfers.get(id)?.handleCompleted();
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		await transfer.handleCompleted();
 		
 	}
 	
 	private handleError(ws: WSORWSSC, id: string, errorMessage: string) {
-		this.#transfers.get(id)?.throw(errorMessage);
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		transfer.throw(errorMessage);
 		
 	}
 	

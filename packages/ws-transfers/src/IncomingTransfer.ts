@@ -1,6 +1,6 @@
 import type { WS } from "insite-ws/client";
 import type { WSServerClient } from "insite-ws/server";
-import { headers, progressInterval } from "./common";
+import { headers, progressInterval, sizeLimit as defaultSizeLimit } from "./common";
 import type {
 	IncomingChunk,
 	IncomingData,
@@ -57,6 +57,7 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 	collect;
 	encoding;
 	size;
+	sizeLimit = defaultSizeLimit;
 	metadata;
 	
 	#handles;
@@ -129,13 +130,28 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 	}
 	
 	async handleChunk(chunk: IncomingChunk, length = chunk.length) {
+		if (this.isAborted)
+			return;
+		
+		const chunkLength = chunk.length;
+		const counted = typeof length == "number" && Number.isFinite(length) && length >= 0 && length <= chunkLength ? length : chunkLength;
+		const nextSize = this.transferedSize + counted;
+		
+		if (
+			nextSize > this.sizeLimit ||
+			(typeof this.size == "number" && Number.isFinite(this.size) && nextSize > this.size)
+		) {
+			this.abort(false);
+			
+			return;
+		}
 		
 		const ts = Date.now();
-		this.bytesPerMs = length / (ts - this.#prevChunkAt!);
+		this.bytesPerMs = counted / (ts - this.#prevChunkAt!);
 		this.#prevChunkAt = ts;
-		this.transferedSize += length;
+		this.transferedSize += counted;
 		
-		this.#chunksQueue.push([ chunk, length ]);
+		this.#chunksQueue.push([ chunk, counted ]);
 		
 		if (!this.#isProcessing) {
 			this.#isProcessing = true;
@@ -193,6 +209,9 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 		this.progress = 1;
 		
 		await this.#methods!.done?.call(this);
+		
+		if (this.error)
+			return;
 		
 		for (const listener of this.#listeners) {
 			if (listener.once)
@@ -279,7 +298,11 @@ export class IncomingTransfer<WSORWSSC extends WS | WSServerClient> {
 			},
 			
 			done() {
-				this.data = JSON.parse(this.data as string);
+				try {
+					this.data = JSON.parse(this.data as string);
+				} catch (error) {
+					this.throw(error instanceof Error ? error.message : "Invalid JSON");
+				}
 				
 			}
 		},

@@ -105,14 +105,15 @@ export class IncomingTransport<
 		
 		if (!this.#listeners.has(kind))
 			ws.sendMessage(headers.error, id, `Unknown kind of file "${kind}"`);
-		else if (this.#transfers.has(id))
-			ws.sendMessage(headers.error, id, "Transfer already exists");
-		else if (!(type in Transfer.types))
+		else if (this.#transfers.has(id)) {
+			if (this.#transfers.get(id)?.ws === ws)
+				ws.sendMessage(headers.error, id, "Transfer already exists");
+		} else if (!(type in Transfer.types))
 			ws.sendMessage(headers.error, id, "Unknown type of transfer");
-		else if (size > this.sizeLimit)
+		else if (typeof size == "number" && Number.isFinite(size) && size > this.sizeLimit)
 			ws.sendMessage(headers.error, id, `Transfer size (${size} bytes) exeeds limit of ${this.sizeLimit} bytes`);
-		else
-			this.#transfers.set(id, new Transfer(
+		else {
+			const transfer = new Transfer(
 				ws,
 				kind,
 				id,
@@ -124,22 +125,41 @@ export class IncomingTransport<
 				},
 				this.#transferHandles,
 				this.#listeners.get(kind)!
-			) as T);
+			) as T;
+			
+			transfer.sizeLimit = this.sizeLimit;
+			this.#transfers.set(id, transfer);
+		}
 		
 	}
 	
 	private async handleChunk(ws: WSORWSSC, id: string, chunk: IncomingChunk, length = chunk.length) {
-		await this.#transfers.get(id)?.handleChunk(chunk, length);
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		await transfer.handleChunk(chunk, length);
 		
 	}
 	
 	private async handleSent(ws: WSORWSSC, id: string) {
-		await this.#transfers.get(id)?.handleSent();
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		await transfer.handleSent();
 		
 	}
 	
 	private handleAbort(ws: WSORWSSC, id: string) {
-		this.#transfers.get(id)?.abort(true);
+		const transfer = this.#transfers.get(id);
+		
+		if (!transfer || transfer.ws !== ws)
+			return;
+		
+		transfer.abort(true);
 		
 	}
 	
