@@ -50,6 +50,10 @@ function escapeAttribute(value: string) {
 	return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll("\"", "&quot;");
 }
 
+function escapeText(value: string) {
+	return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
 function resolveHref(href: string) {
 	if (href.startsWith("http://") || href.startsWith("https://"))
 		return href;
@@ -116,21 +120,23 @@ export class TemplateMiddleware extends ClassMiddleware {
 		
 		Object.assign(globals, envGlobals);
 		
+		const staticRoot = escapeAttribute(INSITE_STATIC_ROOT);
+		
 		this.#html =
 			"<!DOCTYPE html>" +
 			`<html lang="${escapeAttribute(lang)}">` +
 			"<head>" +
 			"<meta charset=\"utf-8\" />" +
 			"<meta name=\"viewport\" content=\"minimum-scale=1, initial-scale=1, width=device-width\" />" +
-			`<title>${this.#title}</title>` +
-			`<link rel="icon" type="image/x-icon" href="${INSITE_STATIC_ROOT}/favicon.ico">` +
+			`<title>${escapeText(this.#title)}</title>` +
+			`<link rel="icon" type="image/x-icon" href="${staticRoot}/favicon.ico">` +
 			renderHead(head) +
-			`${this.#css.map(fileName => `<link rel="stylesheet" href="${INSITE_STATIC_ROOT}/${fileName}" />`).join("")}` +
-			`${isEmpty(globals) ? "" : `<script>globalThis.__insite=${JSON.stringify(globals)};</script>`}` +
-			`<script type="text/javascript" src="${INSITE_STATIC_ROOT}/index.js" defer></script>` +
+			`${this.#css.map(fileName => `<link rel="stylesheet" href="${staticRoot}/${escapeAttribute(fileName)}" />`).join("")}` +
+			`${isEmpty(globals) ? "" : `<script>globalThis.__insite=${JSON.stringify(globals).replaceAll("<", String.raw`\u003c`)};</script>`}` +
+			`<script type="text/javascript" src="${staticRoot}/index.js" defer></script>` +
 			"</head>" +
 			"<body>" +
-			`<div id="${this.#rootId}">` +
+			`<div id="${escapeAttribute(this.#rootId)}">` +
 			"</div>" +
 			"</body>" +
 			"</html>";

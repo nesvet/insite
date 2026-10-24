@@ -116,20 +116,29 @@ export class StaticMiddleware extends ClassMiddleware {
 	
 	#handler: Handler = (request, response) => {
 		
-		let fileName;
+		let relativeKey;
 		
 		try {
-			fileName = decodeURI(request.url);
+			relativeKey = decodeURI(request.path).replace(this.#rootRegExp, "");
 		} catch {
 			return response.notFound();
 		}
 		
-		fileName = fileName.replace(this.#rootRegExp, "").replaceAll("../", "");
+		const resolvedFileName = this.#resolved.get(relativeKey);
+		let fileName;
 		
-		fileName = this.#resolved.get(fileName) ?? path.join(this.#src, fileName);
+		if (resolvedFileName)
+			fileName = resolvedFileName;
+		else {
+			fileName = path.resolve(this.#src, path.normalize(relativeKey));
+			const srcPrefix = this.#src.endsWith(path.sep) ? this.#src : `${this.#src}${path.sep}`;
+			
+			if (fileName !== this.#src && !fileName.startsWith(srcPrefix))
+				return response.notFound();
+		}
 		
 		if (this.#restricted.has(fileName))
-			return false;
+			return response.notFound();
 		
 		if (!fs.existsSync(fileName))
 			return response.notFound();
@@ -147,13 +156,26 @@ export class StaticMiddleware extends ClassMiddleware {
 		if (preloaded)
 			return response.end(isText && contentEncoding ? preloaded[contentEncoding] : preloaded);
 		
-		return new Promise(resolve => {
-			let stream: Readable = fs.createReadStream(fileName).on("error", () => resolve(false));
+		return new Promise<boolean | void>(resolve => {
+			let settled = false;
+			const fail = () => {
+				if (settled)
+					return;
+				
+				settled = true;
+				response.destroy();
+				resolve(false);
+			};
+			const fileStream = fs.createReadStream(fileName).on("error", fail);
+			let stream: Readable = fileStream;
 			
 			if (contentEncoding)
-				stream = stream.pipe(getCompressionStreamByEncoding(contentEncoding));
+				stream = fileStream.pipe(getCompressionStreamByEncoding(contentEncoding)).on("error", fail);
 			
-			stream.on("end", resolve);
+			stream.on("end", () => {
+				if (!settled)
+					resolve();
+			});
 			
 			stream.pipe(response);
 			

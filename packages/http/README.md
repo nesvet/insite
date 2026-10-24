@@ -101,7 +101,7 @@ class ClassMiddleware {
 
 ### StaticMiddleware
 
-Options: src, root, path, extensions, resolved, restricted, preloaded
+Options: src, root, path, extensions, resolved, restricted, preloaded. A path that resolves outside `src` is not served. An explicit `resolved` entry is looked up by the path after the root prefix, before `normalize`.
 
 ### TemplateMiddleware
 
