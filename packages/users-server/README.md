@@ -91,7 +91,7 @@ class Users<AS extends AbilitiesSchema> extends Map<string, User<AS>>
 | `whenReady()` | Returns `Promise<Users>` for init completion |
 | `load(userDoc)` | Loads user from doc into map |
 | `create(newUser)` | Creates user, returns `_id` |
-| `updateUser(_id, updates, byUser?)` | Updates user; `byUser` restricts role changes by subordination |
+| `updateUser(_id, updates, byUser?)` | Updates user; `byUser` restricts role changes by subordination. A non-argon2 `password` is hashed in the same `$set`. Sessions are deleted only when that hash differs from the stored one |
 | `changePassword(_id, newPassword)` | Hashes and updates password, invalidates sessions |
 | `login(email, password, sessionProps)` | Verifies credentials, creates session |
 | `logout(session)` | Deletes session |
@@ -143,7 +143,7 @@ class User<AS extends AbilitiesSchema>
 | `slaves` | `Set<Org<AS> \| User<AS>>` | Union of slaveOrgs and slaveUsers |
 | `slaveIds` | `string[]` | Ids of slaves |
 | `permissiveIds` | `string[]` | Ids user can act on (org, self, slaves) |
-| `sessions` | `Set<Session<AS>>` | Active sessions |
+| `sessions` | `Set<Session<AS>>` | Active sessions. A missing `login.sessionsLimit` does not delete them; an explicit `0` does |
 | `isOnline` | `boolean` | Has at least one online session |
 | `isRoot` | `boolean` | Has root role |
 
@@ -272,7 +272,7 @@ class Session<AS extends AbilitiesSchema>
 | `user` | `User<AS>` | User |
 | `isOnline` | `boolean` | Online flag |
 | `userAgent` | `string` | User agent |
-| `remoteAddress` | `string` | IP |
+| `remoteAddress` | `string` | IPv4, or IPv6 without a zone id |
 | `createdAt` | `number` | Timestamp |
 | `prolongedAt` | `number` | Last prolong timestamp |
 | `expiresAt` | `Date` | Expiry |
@@ -294,7 +294,7 @@ class Avatars
 
 | Method | Description |
 |--------|-------------|
-| `save(_id, type, data)` | Saves base64 data (expects `image/webp`), updates user.avatar |
+| `save(_id, type, data)` | Saves base64 webp up to 512 KiB and updates user.avatar. Another type or a larger body throws |
 | `deleteAvatar(_id)` | Deletes avatar, clears user.avatar |
 
 | Property | Type | Description |
