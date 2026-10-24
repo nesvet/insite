@@ -84,3 +84,34 @@ for (const pkg of order) {
 	if (publish.status !== 0)
 		process.exit(publish.status ?? 1);
 }
+
+const rootManifest = JSON.parse(readFileSync(join(import.meta.dirname, "..", "package.json"), "utf8"));
+const tag = rootManifest.version;
+
+if (!tag) {
+	console.error("root package.json has no version");
+	process.exit(1);
+}
+
+const remoteTag = spawnSync("git", [ "ls-remote", "--tags", "origin", `refs/tags/${tag}` ], {
+	encoding: "utf8"
+});
+
+if (remoteTag.status !== 0) {
+	console.error(remoteTag.stderr);
+	process.exit(remoteTag.status ?? 1);
+}
+
+if (remoteTag.stdout.trim()) {
+	console.log(`skip tag ${tag}`);
+} else {
+	const created = spawnSync("git", [ "tag", tag ], { stdio: "inherit" });
+
+	if (created.status !== 0)
+		process.exit(created.status ?? 1);
+
+	const pushed = spawnSync("git", [ "push", "origin", `refs/tags/${tag}` ], { stdio: "inherit" });
+
+	if (pushed.status !== 0)
+		process.exit(pushed.status ?? 1);
+}
