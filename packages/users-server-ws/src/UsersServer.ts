@@ -22,7 +22,7 @@ export class UsersServer<AS extends AbilitiesSchema> {
 	}
 	
 	#userWsMap = new WeakMap<User<AS>, Set<WSSCWithUser<AS>>>();
-	#sessionsWsMap = new WeakMap<Session<AS>, WSSCWithUser<AS>>();
+	#sessionsWsMap = new WeakMap<Session<AS>, Set<WSSCWithUser<AS>>>();
 	
 	wss!: Options<AS>["wss"];
 	users!: Users<AS>;
@@ -121,7 +121,7 @@ export class UsersServer<AS extends AbilitiesSchema> {
 		
 		if (wssc.session !== session) {
 			if (wssc.session)
-				this.#sessionsWsMap.delete(wssc.session);
+				this.#sessionsWsMap.get(wssc.session)?.delete(wssc);
 			
 			if (session && !wssc.isRejected) {
 				wssc.session = session;
@@ -129,16 +129,22 @@ export class UsersServer<AS extends AbilitiesSchema> {
 				wssc.lastUserId = session.user._id;
 				
 				this.#userWsMap.get(session.user)?.add(wssc);
-				this.#sessionsWsMap.set(session, wssc);
+				
+				const sockets = this.#sessionsWsMap.get(session) ?? new Set<WSSCWithUser<AS>>();
+				sockets.add(wssc);
+				this.#sessionsWsMap.set(session, sockets);
 				
 				if (shouldProlong)
 					void session.prolong(this.#makeSessionProps(wssc));
 				
 			} else {
+				const { user } = wssc;
+				
 				delete wssc.session;
 				delete wssc.user;
 				
-				this.#userWsMap.get(wssc.user!)?.delete(wssc);
+				if (user)
+					this.#userWsMap.get(user)?.delete(wssc);
 			}
 			
 			this.wss.emit("client-session", wssc, shouldProlong);
@@ -161,10 +167,11 @@ export class UsersServer<AS extends AbilitiesSchema> {
 	};
 	
 	#handleSessionDelete = (session: Session<AS>) => {
-		const wssc = this.#sessionsWsMap.get(session);
+		const sockets = this.#sessionsWsMap.get(session);
 		
-		if (wssc)
-			this.setSession(wssc, null);
+		if (sockets)
+			for (const wssc of sockets)
+				this.setSession(wssc, null);
 		
 	};
 	
