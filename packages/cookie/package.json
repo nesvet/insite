@@ -1,6 +1,6 @@
 {
   "name": "insite-cookie",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Cookie-based auth for inSite (client + server)",
   "keywords": [
     "insite",
@@ -44,12 +44,13 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-common": "^2.5.0",
-    "insite-http": "^2.5.0",
-    "insite-users-server-ws": "^2.5.0",
-    "insite-ws": "^2.5.0"
+    "insite-common": "^2.6.0",
+    "insite-http": "^2.6.0",
+    "insite-users-server-ws": "^2.6.0",
+    "insite-ws": "^2.6.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "bun": ">=1.4.4",
+    "node": ">=22.0.0"
   }
 }

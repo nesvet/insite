@@ -1,6 +1,6 @@
 {
   "name": "insite-common",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Shared types, utilities, and schemas for inSite stack",
   "keywords": [
     "insite",
@@ -44,6 +44,7 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "bun": ">=1.4.4",
+    "node": ">=22.0.0"
   }
 }

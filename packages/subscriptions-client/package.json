@@ -1,6 +1,6 @@
 {
   "name": "insite-subscriptions-client",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Client-side subscriptions/publications for inSite",
   "keywords": [
     "insite",
@@ -41,9 +41,10 @@
   "dependencies": {
     "@nesvet/n": "^1.2.1",
     "eventemitter3": "^5.0.4",
-    "insite-ws": "^2.5.0"
+    "insite-ws": "^2.6.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "bun": ">=1.4.4",
+    "node": ">=22.0.0"
   }
 }

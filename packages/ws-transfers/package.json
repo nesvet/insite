@@ -1,6 +1,6 @@
 {
   "name": "insite-ws-transfers",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "File transfers over WebSockets for inSite",
   "keywords": [
     "insite",
@@ -45,10 +45,11 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-ws": "^2.5.0",
+    "insite-ws": "^2.6.0",
     "mime": "^4.1.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "bun": ">=1.4.4",
+    "node": ">=22.0.0"
   }
 }

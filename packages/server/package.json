@@ -1,6 +1,6 @@
 {
   "name": "insite-server",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Main inSite server entry point",
   "keywords": [
     "insite",
@@ -38,18 +38,19 @@
   },
   "dependencies": {
     "@nesvet/n": "^1.2.1",
-    "insite-common": "^2.5.0",
-    "insite-config": "^2.5.0",
-    "insite-cookie": "^2.5.0",
-    "insite-db": "^2.5.0",
-    "insite-http": "^2.5.0",
-    "insite-subscriptions-server": "^2.5.0",
-    "insite-users-server": "^2.5.0",
-    "insite-users-server-ws": "^2.5.0",
-    "insite-ws": "^2.5.0",
-    "insite-ws-transfers": "^2.5.0"
+    "insite-common": "^2.6.0",
+    "insite-config": "^2.6.0",
+    "insite-cookie": "^2.6.0",
+    "insite-db": "^2.6.0",
+    "insite-http": "^2.6.0",
+    "insite-subscriptions-server": "^2.6.0",
+    "insite-users-server": "^2.6.0",
+    "insite-users-server-ws": "^2.6.0",
+    "insite-ws": "^2.6.0",
+    "insite-ws-transfers": "^2.6.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "bun": ">=1.4.4",
+    "node": ">=22.0.0"
   }
 }
