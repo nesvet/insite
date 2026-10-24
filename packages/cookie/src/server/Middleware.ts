@@ -31,13 +31,18 @@ export class CookieMiddleware extends ClassMiddleware {
 	}
 	
 	#handler: RequestHandler = (request, response) => {
-		const token = request.querystring;
+		const pending = request.querystring ? getWithTimeout(tokenMap, request.querystring) : undefined;
 		
-		if (token && tokenMap.has(token))
+		if (pending) {
+			const [ cookie, options, onSet ] = pending;
+			
+			onSet?.();
+			
 			return response.writeHead(200, {
 				"Content-Type": "text/plain; charset=utf-8",
-				"Set-Cookie": CookieMiddleware.cookify(...getWithTimeout(tokenMap, token)!)
+				"Set-Cookie": CookieMiddleware.cookify(cookie, options)
 			}).end();
+		}
 		
 		return false;
 	};

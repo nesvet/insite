@@ -1,4 +1,10 @@
 import type { Cookie, CookieOptions } from "./types";
 
 
-export const tokenMap = new Map<string, [ cookie: Cookie, options: CookieOptions ]>();
+export type PendingCookie = [
+	cookie: Cookie,
+	options: CookieOptions,
+	onSet?: () => void
+];
+
+export const tokenMap = new Map<string, PendingCookie>();

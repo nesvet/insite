@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `insite-cookie` refreshes the session cookie on a later visit, at most once a day, so its `Max-Age` slides with the session.
+
 ## [2.5.0] - 2026-10-23
 
 ### Changed
