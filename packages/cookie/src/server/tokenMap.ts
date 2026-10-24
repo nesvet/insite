@@ -1,7 +1,7 @@
 import type { Cookie, CookieOptions } from "./types";
 
 
-export type PendingCookie = [
+type PendingCookie = [
 	cookie: Cookie,
 	options: CookieOptions,
 	onSet?: () => void

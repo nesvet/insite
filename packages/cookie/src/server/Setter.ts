@@ -99,9 +99,8 @@ export class CookieSetter<AS extends AbilitiesSchema> {
 				this.#writeSessionCookie(wssc);
 			else
 				this.unset(wssc, [ "sessionId" ]);
-		} else if (shouldProlong && wssc.isOpen && wssc.session && this.#isCookieStale(wssc.session)) {
+		} else if (shouldProlong && wssc.isOpen && wssc.session && this.#isCookieStale(wssc.session))
 			this.#writeSessionCookie(wssc);
-		}
 		
 	};
 	
@@ -112,7 +111,7 @@ export class CookieSetter<AS extends AbilitiesSchema> {
 	};
 	
 	#writeSessionCookie(wssc: WSSCWithUser<AS>) {
-		const session = wssc.session;
+		const { session } = wssc;
 		
 		if (!session || this.#cookieWritePending.has(session._id))
 			return;
